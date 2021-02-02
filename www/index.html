@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello wasm-pack!</title>
+  </head>
+  <body>
+    <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+    <script src="./dist/bundle.js"></script>
+    <form id="theform">
+      <p>MASTER.DIR: <input class="file-selector" type="file" id="masterdir" name="files[]" /></p>
+      <p>MASTER.DAT: <input class="file-selector" type="file" id="masterdat" name="files[]" /></p>
+      <input type="radio" id="gamecube" name="gameconsole" value=0>
+      <label for="console">Gamecube</label><br>
+      <input type="radio" id="pc" name="gameconsole" value=1>
+      <label for="console">PC</label><br>
+      <input type="radio" id="ps2" name="gameconsole" value=2>
+      <label for="console">PS2</label><br>
+      <input type="radio" id="xbox" name="gameconsole" value=3>
+      <label for="console">Xbox</label><br>
+      <input type="submit">
+    </form>
+  </body>
+</html>
