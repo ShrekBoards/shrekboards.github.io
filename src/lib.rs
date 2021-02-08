@@ -9,7 +9,7 @@ use wasm_bindgen::prelude::*;
 /// files from a game on the given `console`, and return the attacks as a
 /// JSON object.
 #[wasm_bindgen]
-pub fn entry1(master_dat: &[u8], master_dir: &[u8], console: i32) -> JsValue {
+pub fn extract_character_attacks(master_dat: &[u8], master_dir: &[u8], console: i32) -> JsValue {
     console_error_panic_hook::set_once();
     let console = match console {
         0 => Console::Gamecube,
