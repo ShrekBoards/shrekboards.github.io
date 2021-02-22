@@ -1,12 +1,12 @@
 <template>
     <div class="sidebar">
         <ul>
-            <a v-for="character in characters" :key="character" href="#">
+            <router-link v-for="character in characters" :key="character" :to="`/ui/${character}`">
                 <li>
                     <img :src="`/icons/${character}.png`"/>
                     {{ character }}
                 </li>
-            </a>
+            </router-link>
         </ul>
     </div>
 </template>

@@ -1,8 +1,12 @@
 <template>
     <div class="attack">
-        <button type="button" class="collapsible">attack</button>
+        <button type="button" class="collapsible" v-on:click="expand">{{ a.name }}</button>
         <div class="content">
-            <p>hello</p>
+            <ul>
+                <li v-for="(value, fieldName) in a" :key="value">
+                    {{ fieldName }}: {{ value }}
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -16,30 +20,33 @@ export default defineComponent({
     attack: { type: Object, required: true }
   },
   setup(props) {
-      const a = ref(Object.keys(props.attack));
+      const a = ref(props.attack);
       return { a };
-  }
-});
-
-const coll = document.getElementsByClassName("collapsible") as HTMLCollectionOf<HTMLElement>;
-let i;
-
-for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function(this: HTMLElement) {
-        this.classList.toggle("active");
-        const content = <HTMLElement>this.nextElementSibling;
-        if (content !== null) {
+  },
+  methods: {
+    expand: function(event: Event) {
+      const button = event.target as HTMLElement;
+        if (button !== null) {
+          button.classList.toggle("active");
+          const content = button.nextElementSibling as HTMLElement;
+          if (content !== null) {
             if (content.style.display === "block") {
-                content.style.display = "none";
+              content.style.display = "none";
             } else {
-                content.style.display = "block";
+              content.style.display = "block";
             }
+          }
         }
-    });
-} 
+      }
+    },
+});
 </script>
 
 <style scoped>
+.attack {
+    padding-left: 280px;
+}
+
 .collapsible {
     background-color: #eee;
     color: #444;
@@ -61,5 +68,15 @@ for (i = 0; i < coll.length; i++) {
   display: none;
   overflow: hidden;
   background-color: #f1f1f1;
+}
+
+ul {
+    padding: 0px;
+    list-style-type: none;
+    text-align: left;
+}
+
+li {
+    padding: 5px;
 }
 </style>

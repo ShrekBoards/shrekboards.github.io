@@ -23,9 +23,10 @@ const routes: Array<RouteRecordRaw> = [
     component: Upload
   },
   {
-    path: '/ui',
+    path: '/ui/:char',
     name: 'UI',
-    component: UI
+    component: UI,
+    props: true
   }
 ]
 

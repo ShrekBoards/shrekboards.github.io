@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/upload">Upload</router-link> |
-    <router-link to="/ui">UI</router-link>
+    <router-link to="/ui/red">UI</router-link>
   </div>
   <router-view/>
 </template>
