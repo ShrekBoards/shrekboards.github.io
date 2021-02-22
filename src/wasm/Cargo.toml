@@ -10,5 +10,5 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 console_error_panic_hook = { version = "0.1.6" }
 serde = { version = "1.0", features = ["derive"] }
-shrek-superslam = { path = "../rust" }
+shrek-superslam = { path = "../../../rust" }
 wasm-bindgen = { version = "0.2.63", features = ["serde-serialize"] }

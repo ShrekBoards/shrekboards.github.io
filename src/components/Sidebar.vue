@@ -33,7 +33,7 @@ export default defineComponent({
     background-color: #EEE;
     font-size: 18px;
     overflow-y: scroll;
-    top: 0;
+    top: 54px;
     bottom: 0;
 }
 

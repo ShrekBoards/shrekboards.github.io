@@ -55,6 +55,8 @@ export default defineComponent({
 <style scoped>
 .attack {
     padding-left: 280px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 .collapsible {
