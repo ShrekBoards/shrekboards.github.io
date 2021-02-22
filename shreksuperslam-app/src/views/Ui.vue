@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import Sidebar from '@/components/Sidebar.vue';
 import Attack from '@/components/Attack.vue';
 import { data } from '@/data'
@@ -24,7 +24,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-      const x = ref(data);
+      const x = reactive(data);
       return { x };
   }
 });

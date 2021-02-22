@@ -3,8 +3,12 @@
         <button type="button" class="collapsible" v-on:click="expand">{{ a.name }}</button>
         <div class="content">
             <ul>
-                <li v-for="(value, fieldName) in a" :key="value">
-                    {{ fieldName }}: {{ value }}
+                <!-- Create a form entry for every field in the attack. -->
+                <li v-for="field in Object.keys(a)" :key="field">
+                    <div v-if="field !== 'name' && field !== 'hitboxes'">
+                        <div v-if="a[field] === true || a[field] === false">{{ field }}: <input v-model="a[field]" type="checkbox"/></div>
+                        <div v-else>{{ field }}: <input v-model.number="a[field]"/></div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -12,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
   name: 'Attack',
@@ -20,11 +24,17 @@ export default defineComponent({
     attack: { type: Object, required: true }
   },
   setup(props) {
-      const a = ref(props.attack);
+      const a = reactive(props.attack);
       return { a };
   },
   methods: {
     expand: function(event: Event) {
+      /**
+       * Onclick handler for expanding and closing an attack entry.
+       *
+       * Params:
+       *   event: The onclick event passed from Vue.
+       */
       const button = event.target as HTMLElement;
         if (button !== null) {
           button.classList.toggle("active");
