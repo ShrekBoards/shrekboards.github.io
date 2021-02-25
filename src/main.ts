@@ -2,8 +2,23 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-createApp(App).use(router).mount('#app')
-
+import("@/wasm/pkg/index").then(s3wasm => {
+    const app = createApp({
+        template: `
+        <div id="nav">
+            <router-link to="/">Home</router-link> |
+            <router-link to="/about">About</router-link> |
+            <router-link to="/upload">Upload</router-link> |
+            <router-link to="/ui/red">UI</router-link>
+        </div>
+        <router-view/>
+        `,
+        provide: {
+            wasmExtractCharacterAttacks: s3wasm.extract_character_attacks,
+        },
+    }).use(router).mount("#app");
+});
+//createApp(App).use(router).mount("#app");
 /*
 import('../pkg/index').then(s3web => {
 
