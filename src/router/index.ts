@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Upload
   },
   {
-    path: '/ui/:char',
+    path: '/ui/:selectedCharacter',
     name: 'UI',
     component: UI,
     props: true

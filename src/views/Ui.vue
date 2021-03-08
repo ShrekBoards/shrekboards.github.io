@@ -1,17 +1,17 @@
 <template>
     <div class="ui">
         <Navbar/>
-        <Sidebar :x="x"/>
-        <Attack v-for="a in x[char]" :key="a" :attack="a"/>
+        <Sidebar :x="attacks"/>
+        <Attack v-for="a in attacks[selectedCharacter]" :key="a" :attack="a"/>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, inject, } from 'vue';
+import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 import Sidebar from '@/components/Sidebar.vue';
 import Attack from '@/components/Attack.vue';
 import Navbar from '@/components/Navbar.vue'
-import { data } from '@/data'
 
 export default defineComponent({
   name: 'UI',
@@ -21,14 +21,16 @@ export default defineComponent({
     Navbar,
   },
   props: {
-    char: {
+    // This comes from the URL
+    selectedCharacter: {
       required: true,
       type: String
-    },
+    }
   },
   setup(props) {
-      const x = reactive(data);
-      return { x };
+      // Get the character attacks
+      const attacks = inject("attacks") as ShrekSuperSlamCharacterAttackCollection;
+      return { attacks };
   }
 });
 </script>

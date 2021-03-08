@@ -12,15 +12,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
+import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 
 export default defineComponent({
   name: 'Sidebar',
   props: {
-    x: { type: Object, required: true }
+    x: {
+        required: true,
+        type: Object as PropType<ShrekSuperSlamCharacterAttackCollection>,
+    }
   },
   setup(props) {
-      const characters = ref(Object.keys(props.x));
+      const characters = ref(Object.keys(props.x).sort());
       return { characters };
   }
 });

@@ -1,6 +1,6 @@
 <template>
   <div class="upload">
-    <form id="theform" v-on:submit="formsubmit">
+    <form id="theform" v-on:submit.prevent="formsubmit">
       <p>MASTER.DAT: <input class="file-selector" type="file" id="masterdat" name="files[]" /></p>
       <p>MASTER.DIR: <input class="file-selector" type="file" id="masterdir" name="files[]" /></p>
       <input type="radio" id="gamecube" name="gameconsole" value=0>
@@ -19,11 +19,14 @@
 <script lang="ts">
 import { ShrekSuperSlamCharacterAttackCollection } from "../types"
 import { defineComponent, inject } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'UploadForm',
     setup() {
         const wasmExtractCharacterAttacks = inject("wasmExtractCharacterAttacks") as Function;
+        const attacksGlobal = inject("attacks");
+        const router = useRouter();
         /**
          * Form submit handler.
          *
@@ -51,29 +54,28 @@ export default defineComponent({
                     })
 
                     // Submit to wasm function
-                    const x: ShrekSuperSlamCharacterAttackCollection = wasmExtractCharacterAttacks(
+                    const attacks = wasmExtractCharacterAttacks(
                         values[1],
                         values[0],
                         gameconsole
                     );
+                    (attacksGlobal as any).value = attacks;
+
+                    // Disable the event resubmission
+                    if (event.preventDefault)
+                        event.preventDefault();
+
+                    router.push({
+                        name: "UI",
+                        params: { selectedCharacter: "red" }
+                    });
                 });
             }
-        
-            // Disable the event resubmission
-            if (event.preventDefault)
-                event.preventDefault();
-            else
-                return false;
         }
 
         return {
             formsubmit,
         };
     },
-    //methods: {
-
-    //formsubmit: function(event: Event) {
- 
-    //}
 });
 </script>
