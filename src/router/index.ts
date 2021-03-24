@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import Download from '../views/Download.vue'
 import Home from '../views/Home.vue'
 import Upload from '../views/Upload.vue'
 import UI from '../views/Ui.vue'
@@ -27,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'UI',
     component: UI,
     props: true
+  },
+  {
+    path: '/download',
+    name: 'Download',
+    component: Download
   }
 ]
 

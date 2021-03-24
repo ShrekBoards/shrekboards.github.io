@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: "SaveButton",
@@ -15,6 +16,7 @@ export default defineComponent({
         const masterDirGlobal = inject("masterDir");
         const consoleGlobal = inject("console");
         const attacksGlobal = inject("attacks");
+        const router = useRouter();
         /**
          * Button click handler
          */
@@ -28,6 +30,8 @@ export default defineComponent({
 
             (masterDatGlobal as any).value = (newFiles[0] as Uint8Array);
             (masterDirGlobal as any).value = (newFiles[1] as Uint8Array);
+
+            router.push("/download");
         }
 
         return {
