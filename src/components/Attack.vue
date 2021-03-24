@@ -5,7 +5,7 @@
             <ul>
                 <!-- Create a form entry for every field in the attack. -->
                 <li v-for="field in Object.keys(a)" :key="field">
-                    <div v-if="field !== 'name' && field !== 'hitboxes'">
+                    <div v-if="field !== 'name' && field !== 'hitboxes' && field !== 'projectile'">
                         <div v-if="a[field] === true || a[field] === false">{{ field }}: <input v-model="a[field]" type="checkbox"/></div>
                         <div v-else>{{ field }}: <input v-model.number="a[field]"/></div>
                     </div>

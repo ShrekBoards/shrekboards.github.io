@@ -3,6 +3,7 @@
         <Navbar/>
         <Sidebar :x="attacks"/>
         <Attack v-for="a in attacks[selectedCharacter]" :key="a" :attack="a"/>
+        <SaveButton/>
     </div>
 </template>
 
@@ -11,7 +12,8 @@ import { defineComponent, inject, } from 'vue';
 import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 import Sidebar from '@/components/Sidebar.vue';
 import Attack from '@/components/Attack.vue';
-import Navbar from '@/components/Navbar.vue'
+import Navbar from '@/components/Navbar.vue';
+import SaveButton from '@/components/SaveButton.vue';
 
 export default defineComponent({
   name: 'UI',
@@ -19,6 +21,7 @@ export default defineComponent({
     Sidebar,
     Attack,
     Navbar,
+    SaveButton,
   },
   props: {
     // This comes from the URL

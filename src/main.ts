@@ -1,4 +1,4 @@
-import { createApp, ref } from 'vue'
+import { createApp, ref, resolveDirective } from 'vue'
 import router from './router'
 
 import("@/wasm/pkg/index").then(s3wasm => {
@@ -13,8 +13,12 @@ import("@/wasm/pkg/index").then(s3wasm => {
         <router-view/>
         `,
         provide: {
+            masterDat: ref(new Uint8Array()),
+            masterDir: ref(new Uint8Array()),
+            console: ref(0),
             attacks: ref({}),
             wasmExtractCharacterAttacks: s3wasm.extract_character_attacks,
+            wasmRecreateGameFiles: s3wasm.recreate_game_files,
         },
     }).use(router).mount("#app");
 });

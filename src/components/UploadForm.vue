@@ -25,6 +25,9 @@ export default defineComponent({
     name: 'UploadForm',
     setup() {
         const wasmExtractCharacterAttacks = inject("wasmExtractCharacterAttacks") as Function;
+        const masterDatGlobal = inject("masterDat");
+        const masterDirGlobal = inject("masterDir");
+        const consoleGlobal = inject("console");
         const attacksGlobal = inject("attacks");
         const router = useRouter();
         /**
@@ -51,14 +54,19 @@ export default defineComponent({
                         if ((item as HTMLInputElement).checked) {
                             gameconsole = parseInt((item as HTMLInputElement).value);
                         }
-                    })
+                    });
+
+                    // Save off the form inputs
+                    (masterDatGlobal as any).value = values[1];
+                    (masterDirGlobal as any).value = values[0];
+                    (consoleGlobal as any).value = gameconsole;
 
                     // Submit to wasm function
                     const attacks = wasmExtractCharacterAttacks(
                         values[1],
                         values[0],
                         gameconsole
-                    );
+                    ) as ShrekSuperSlamCharacterAttackCollection;
                     (attacksGlobal as any).value = attacks;
 
                     // Disable the event resubmission
