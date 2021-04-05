@@ -1,22 +1,37 @@
 <template>
     <div class="attack">
-        <button type="button" class="collapsible" v-on:click="expand">{{ a.name }}</button>
-        <div class="content">
-            <ul>
+        <ul class="collapsible">
+          <li>
+            <div class="collapsible-header" v-on:click="expand"><i class="material-icons">keyboard_arrow_right</i>{{ a.name }}</div>
+            <div class="collapsible-body">
+              <ul>
                 <!-- Create a form entry for every field in the attack. -->
                 <li v-for="field in Object.keys(a)" :key="field">
                     <div v-if="field !== 'name' && field !== 'hitboxes' && field !== 'projectile'">
-                        <div v-if="a[field] === true || a[field] === false">{{ field }}: <input v-model="a[field]" type="checkbox"/></div>
-                        <div v-else>{{ field }}: <input v-model.number="a[field]"/></div>
+                      <div v-if="a[field] === true || a[field] === false">
+                        <p>
+                          <input class="no-materialize" v-model="a[field]" type="checkbox"/>
+                          <span>{{ field }}:</span>
+                        </p>
+                      </div>
+                      <div v-else>
+                        {{ field }}:
+                        <div class="input-field inline">
+                          <input v-model.number="a[field]"/>
+                        </div>
+                      </div>
                     </div>
                 </li>
-            </ul>
-        </div>
+              </ul>
+            </div>
+          </li>
+        </ul>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import M from 'materialize-css';
 
 export default defineComponent({
   name: 'Attack',
@@ -25,34 +40,45 @@ export default defineComponent({
   },
   setup(props) {
       const a = reactive(props.attack);
-      return { a };
-  },
-  methods: {
-    expand: function(event: Event) {
-      /**
-       * Onclick handler for expanding and closing an attack entry.
-       *
-       * Params:
-       *   event: The onclick event passed from Vue.
-       */
-      const button = event.target as HTMLElement;
-        if (button !== null) {
-          button.classList.toggle("active");
-          const content = button.nextElementSibling as HTMLElement;
-          if (content !== null) {
-            if (content.style.display === "block") {
-              content.style.display = "none";
-            } else {
-              content.style.display = "block";
-            }
+      function expand(event: Event) {
+        /**
+         * Onclick handler for expanding and closing an attack entry.
+         *
+         * Modified the arrow icon in the attack box to indicate if the box
+         * is expanded or not.
+         *
+         * Params:
+         *   event: The onclick event passed from Vue.
+         */
+        const button = event.target as HTMLElement;
+        if (button !== null && button.children.length > 0) {
+          const currentIcon = button.children[0].innerHTML;
+          if (currentIcon === "keyboard_arrow_right") {
+            button.children[0].innerHTML = "keyboard_arrow_down";
+          } else {
+            button.children[0].innerHTML = "keyboard_arrow_right";
           }
+        } else if (button.innerHTML === "keyboard_arrow_right") {
+          button.innerHTML = "keyboard_arrow_down";
+        } else if (button.innerHTML === "keyboard_arrow_down") {
+          button.innerHTML = "keyboard_arrow_right";
         }
       }
-    },
+      return { a, expand };
+  },
+  mounted() {
+    const elems = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(elems, {});
+  },
 });
 </script>
 
 <style scoped>
+.no-materialize input {
+
+}
+
+/*
 .attack {
     padding-left: 280px;
     padding-top: 2px;
@@ -91,4 +117,5 @@ ul {
 li {
     padding: 5px;
 }
+*/
 </style>

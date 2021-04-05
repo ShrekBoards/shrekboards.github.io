@@ -1,9 +1,16 @@
 <template>
     <div class="ui">
         <Navbar/>
-        <Sidebar :x="attacks"/>
-        <Attack v-for="a in attacks[selectedCharacter]" :key="a" :attack="a"/>
-        <SaveButton/>
+        <div class="row">
+          <div class="col s3">
+            <Sidebar :x="attacks" :selected="selectedCharacter"/>
+          </div>
+          <div class="col s9">
+            <h4>{{ selectedCharacter }}</h4>
+            <Attack v-for="a in attacks[selectedCharacter]" :key="a" :attack="a"/>
+            <SaveButton/>
+          </div>
+        </div>
     </div>
 </template>
 
@@ -37,3 +44,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.ui {
+  height: 100%;
+}
+</style>

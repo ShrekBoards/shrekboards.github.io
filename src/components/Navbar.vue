@@ -1,9 +1,16 @@
 <template>
-    <div class="nav">
-        <router-link to="/about">About</router-link>
-        <router-link to="/upload">Upload</router-link>
-        <router-link to="/ui/red">UI</router-link>
-        <router-view/>
+    <div class="nav navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Shab'aint</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><router-link to="/about">About</router-link></li>
+                    <li><router-link to="/upload">Upload</router-link></li>
+                    <li><router-link to="/ui/red">UI</router-link></li>
+                    <li><router-view/></li>
+                </ul>
+            </div>
+        </nav>
     </div>
 </template>
 
@@ -14,22 +21,3 @@ export default defineComponent({
   name: 'Navbar',
 });
 </script>
-
-<style scoped>
-.nav {
-    width: 100%;
-    position: fixed;
-    background-color: deepskyblue;
-    top: 0;
-    overflow: hidden;
-}
-
-.nav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 18px 16px;
-    text-decoration: none;
-}
-</style>

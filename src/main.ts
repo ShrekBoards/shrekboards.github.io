@@ -1,15 +1,11 @@
 import { createApp, ref, resolveDirective } from 'vue'
 import router from './router'
+import 'materialize-css/dist/css/materialize.min.css'
+import 'material-design-icons/iconfont/material-icons.css'
 
 import("@/wasm/pkg/index").then(s3wasm => {
     createApp({
         template: `
-        <div id="nav">
-            <router-link to="/">Home</router-link> |
-            <router-link to="/about">About</router-link> |
-            <router-link to="/upload">Upload</router-link> |
-            <router-link to="/ui/red">UI</router-link>
-        </div>
         <router-view/>
         `,
         provide: {

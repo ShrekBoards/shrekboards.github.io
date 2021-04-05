@@ -1,16 +1,54 @@
 <template>
   <div class="upload">
     <form id="theform" v-on:submit.prevent="formsubmit">
+      <!--
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>MASTER.DAT</span>
+          <input class="file-selector" type="file" id="masterdat" name="files[]" />
+        </div>
+      </div>
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>MASTER.DIR</span>
+          <input class="file-selector" type="file" id="masterdir" name="files[]" />
+        </div>
+      </div>
+      -->
       <p>MASTER.DAT: <input class="file-selector" type="file" id="masterdat" name="files[]" /></p>
       <p>MASTER.DIR: <input class="file-selector" type="file" id="masterdir" name="files[]" /></p>
-      <input type="radio" id="gamecube" name="gameconsole" value=0>
-      <label for="console">Gamecube</label><br>
+      <p>
+        <label>
+          <input type="radio" id="gamecube" name="gameconsole" value=0 checked/>
+          <span>Gamecube</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="radio" id="pc" name="gameconsole" value=1/>
+          <span>PC</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="radio" id="ps2" name="gameconsole" value=2/>
+          <span>PS2</span>
+        </label>
+      </p>
+      <p>
+        <label>
+          <input type="radio" id="xbox" name="gameconsole" value=3/>
+          <span>Xbox</span>
+        </label>
+      </p>
+      <!--
       <input type="radio" id="pc" name="gameconsole" value=1>
       <label for="console">PC</label><br>
       <input type="radio" id="ps2" name="gameconsole" value=2>
       <label for="console">PS2</label><br>
       <input type="radio" id="xbox" name="gameconsole" value=3>
       <label for="console">Xbox</label><br>
+      -->
       <input type="submit">
     </form>
   </div>
@@ -73,9 +111,14 @@ export default defineComponent({
                     if (event.preventDefault)
                         event.preventDefault();
 
+                    // Get the first character alphabetically to navigate to
+                    const characterNames = Object.keys(attacks);
+                    characterNames.sort();
+
+                    // Navigate to the main UI
                     router.push({
                         name: "UI",
-                        params: { selectedCharacter: "red" }
+                        params: { selectedCharacter: characterNames[0] }
                     });
                 });
             }
