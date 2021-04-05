@@ -53,6 +53,7 @@ export default defineComponent({
     width: 23vw;
     overflow: hidden;
     overflow-y: none;
+    border-right: 1px solid rgba(0,0,0,0.14);
 }
 
 .sidebar:hover {

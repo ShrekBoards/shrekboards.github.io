@@ -8,6 +8,7 @@
           <div class="col s9">
             <h4>{{ selectedCharacter }}</h4>
             <Attack v-for="a in attacks[selectedCharacter]" :key="a" :attack="a"/>
+            <ResetButton/>
             <SaveButton/>
           </div>
         </div>
@@ -21,6 +22,7 @@ import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 import Sidebar from '@/components/Sidebar.vue';
 import Attack from '@/components/Attack.vue';
 import Navbar from '@/components/Navbar.vue';
+import ResetButton from '@/components/ResetButton.vue'
 import SaveButton from '@/components/SaveButton.vue';
 
 export default defineComponent({
@@ -29,6 +31,7 @@ export default defineComponent({
     Sidebar,
     Attack,
     Navbar,
+    ResetButton,
     SaveButton,
   },
   props: {
