@@ -1,5 +1,5 @@
 <template>
-    <div class="reset">
+    <div v-if="!stateCleared()" class="reset">
         <div id="modal1" class="modal">
             <div class="modal-content">
                 <h3><i class="material-icons left medium">warning</i>Reset</h3>
@@ -10,7 +10,7 @@
                 <a class="modal-close waves-effect waves-green btn-flat" v-on:click="buttonclick"><i class="material-icons left">check</i>Confirm</a>
             </div>
         </div>
-        <button class="waves-effect waves-light btn red darken-1 modal-trigger" data-target="modal1"><i class="material-icons left">clear</i>Reset</button>
+        <a class="waves-effect waves-light btn red darken-1 modal-trigger" data-target="modal1"><i class="material-icons left">clear</i>Reset</a>
     </div>
 </template>
 
@@ -28,19 +28,34 @@ export default defineComponent({
         const attacksGlobal = inject("attacks");
         const router = useRouter();
         /**
+         * Function to determine if the state has been cleared or not.
+         */
+        function stateCleared() {
+            return (
+                ((masterDatGlobal as any).value.length == 0)
+                && ((masterDirGlobal as any).value.length == 0)
+                && (((consoleGlobal as any).value) == 0)
+                && (Object.keys((attacksGlobal as any).value).length == 0)
+            );
+        }
+
+        /**
          * Button click handler.
          *
          * Deletes the current state and redirects to the upload form.
          */
         function buttonclick() {
-            (masterDatGlobal as any).value = new Uint8Array();
-            (masterDirGlobal as any).value = new Uint8Array();
-            (consoleGlobal as any).value = 0;
-            (attacksGlobal as any).value = {};
-            router.push({name: "Upload"});
+            if (!stateCleared()) {
+                (masterDatGlobal as any).value = new Uint8Array();
+                (masterDirGlobal as any).value = new Uint8Array();
+                (consoleGlobal as any).value = 0;
+                (attacksGlobal as any).value = {};
+                router.push({name: "Upload"});
+            }
         }
 
         return {
+            stateCleared,
             buttonclick,
         }
     },
@@ -50,3 +65,14 @@ export default defineComponent({
     }
 })
 </script>
+
+<style scoped>
+.modal {
+    color: black;
+    overflow-y: unset;
+}
+
+.material-icons {
+    font-size: unset;
+}
+</style>

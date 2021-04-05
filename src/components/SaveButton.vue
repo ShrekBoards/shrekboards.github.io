@@ -1,5 +1,5 @@
 <template>
-    <div class="save">
+    <div class="save" v-if="isEnabled()">
         <a class="waves-effect waves-light btn" v-on:click="buttonclick"><i class="material-icons left">build</i>Generate</a>
     </div>
 </template>
@@ -18,6 +18,13 @@ export default defineComponent({
         const attacksGlobal = inject("attacks");
         const router = useRouter();
         /**
+         * Function to determine if the button should render at all
+         */
+        function isEnabled() {
+            return router.currentRoute.value.path.startsWith("/character");
+        }
+
+        /**
          * Button click handler
          */
         function buttonclick(event: Event) {
@@ -35,6 +42,7 @@ export default defineComponent({
         }
 
         return {
+            isEnabled,
             buttonclick,
         }
     }
