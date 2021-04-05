@@ -5,22 +5,20 @@
             <div class="collapsible-header" v-on:click="expand"><i class="material-icons">keyboard_arrow_right</i>{{ a.name }}</div>
             <div class="collapsible-body">
               <ul>
-                <!-- Create a form entry for every field in the attack. -->
-                <li v-for="field in Object.keys(a)" :key="field">
-                    <div v-if="field !== 'name' && field !== 'hitboxes' && field !== 'projectile'">
-                      <div v-if="a[field] === true || a[field] === false">
-                        <p>
-                          <input class="no-materialize" v-model="a[field]" type="checkbox"/>
-                          <span>{{ field }}:</span>
-                        </p>
-                      </div>
-                      <div v-else>
-                        {{ field }}:
-                        <div class="input-field inline">
-                          <input v-model.number="a[field]"/>
-                        </div>
-                      </div>
+                <!-- Create a form entry for every field in the attack. We start with the text box entries. -->
+                <li v-for="field in Object.keys(a).filter(k => typeof a[k] != 'boolean')" :key="field">
+                  <div v-if="field !== 'name' && field !== 'hitboxes' && field !== 'projectile'">
+                    {{ field }}
+                    <div class="input-field inline">
+                      <input v-model.number="a[field]"/>
                     </div>
+                  </div>
+                </li>
+                <li v-for="field in Object.keys(a).filter(k => typeof a[k] == 'boolean')" :key="field">
+                  <label>
+                    <input v-model="a[field]" class="filled-in" type="checkbox"/>
+                    <span>{{ field }}</span>
+                  </label>
                 </li>
               </ul>
             </div>
@@ -74,48 +72,4 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.no-materialize input {
-
-}
-
-/*
-.attack {
-    padding-left: 280px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
-
-.collapsible {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-}
-
-.active, .collapsible:hover {
-  background-color: #ccc;
-}
-
-.content {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
-}
-
-ul {
-    padding: 0px;
-    list-style-type: none;
-    text-align: left;
-}
-
-li {
-    padding: 5px;
-}
-*/
 </style>
