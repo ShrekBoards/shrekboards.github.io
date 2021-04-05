@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar sidenav-fixed">
         <ul>
-            <router-link v-for="character in characters" :key="character" :to="`/ui/${character}`">
+            <router-link v-for="character in characters" :key="character" :to="`/characters/${character}`">
                 <div v-if="selected == character" class="active">
                     <li>
                         <div class="valign-wrapper">
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, readonly, ref } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 
 export default defineComponent({

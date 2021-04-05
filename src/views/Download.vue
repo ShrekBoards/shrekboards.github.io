@@ -4,9 +4,12 @@
         <div class="row">
           <div class="col s6 offset-s3">
             <h2>Download</h2>
+            <p>For more information on how to use these files, refer to the <router-link to="/help">help</router-link> documentation.</p>
             <div class="card darken-1">
-              <DownloadButton :filename="'MASTER.DAT'" :data="masterDat"/>
-              <DownloadButton :filename="'MASTER.DIR'" :data="masterDir"/>
+              <ul>
+                <li><DownloadButton :filename="'MASTER.DAT'" :data="masterDat"/></li>
+                <li><DownloadButton :filename="'MASTER.DIR'" :data="masterDir"/></li>
+              </ul>
             </div>
           </div>
         </div>
@@ -15,6 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, inject, readonly } from 'vue';
+import { useRouter } from 'vue-router';
 import DownloadButton from '@/components/DownloadButton.vue';
 import Navbar from '@/components/Navbar.vue';
 
@@ -29,6 +33,13 @@ export default defineComponent({
     const masterDirGlobal = inject("masterDir");
     const masterDat = readonly((masterDatGlobal as any).value);
     const masterDir = readonly((masterDirGlobal as any).value);
+
+    // If the MASTER.DAT or MASTER.DIR are not generated, redirect to the upload page
+    if (masterDat.length == 0 || masterDat.length == 0) {
+      const router = useRouter();
+      router.replace({ name: "Upload" });
+    }
+
     return {
         masterDat,
         masterDir,
@@ -36,3 +47,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+li {
+  padding: 10px;
+}
+</style>
