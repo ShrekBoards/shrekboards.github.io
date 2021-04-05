@@ -39,3 +39,9 @@ export default defineComponent({
     }
 })
 </script>
+
+<style scoped>
+.btn-large {
+  margin-right: 15px;
+}
+</style>

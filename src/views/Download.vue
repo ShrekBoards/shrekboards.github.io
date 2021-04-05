@@ -7,8 +7,8 @@
             <p>For more information on how to use these files, refer to the <router-link to="/help">help</router-link> documentation.</p>
             <div class="card darken-1">
               <ul>
-                <li><DownloadButton :filename="'MASTER.DAT'" :data="masterDat"/></li>
-                <li><DownloadButton :filename="'MASTER.DIR'" :data="masterDir"/></li>
+                <li><div class="valign-wrapper"><DownloadButton :filename="'MASTER.DAT'" :data="masterDat"/>{{ Math.round(masterDat.length / Math.pow(2, 20)) }} MB</div></li>
+                <li><div class="valign-wrapper"><DownloadButton :filename="'MASTER.DIR'" :data="masterDir"/>{{ Math.round(masterDir.length / Math.pow(2, 10)) }} KB</div></li>
               </ul>
             </div>
           </div>
