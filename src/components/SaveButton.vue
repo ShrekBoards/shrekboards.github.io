@@ -1,6 +1,6 @@
 <template>
     <div class="save">
-        <button v-on:click="buttonclick">Generate</button>
+        <a class="waves-effect waves-light btn" v-on:click="buttonclick"><i class="material-icons left">build</i>Generate</a>
     </div>
 </template>
 

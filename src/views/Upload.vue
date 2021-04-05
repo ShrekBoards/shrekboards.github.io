@@ -1,7 +1,12 @@
 <template>
     <div class="ui">
         <Navbar/>
-        <UploadForm/>
+        <div class="row">
+          <div class="col s6 offset-s3">
+            <h2>Upload</h2>
+            <UploadForm/>
+          </div>
+        </div>
     </div>
 </template>
 

@@ -1,55 +1,53 @@
 <template>
   <div class="upload">
-    <form id="theform" v-on:submit.prevent="formsubmit">
-      <!--
-      <div class="file-field input-field">
-        <div class="btn">
-          <span>MASTER.DAT</span>
-          <input class="file-selector" type="file" id="masterdat" name="files[]" />
+    <form id="theform">
+      <div class="card darken-1">
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>MASTER.DAT</span>
+            <input type="file" id="masterdat" name="files[]" />
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>MASTER.DIR</span>
+            <input type="file" id="masterdir" name="files[]" />
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        <p>
+          <label>
+            <input type="radio" id="gamecube" name="gameconsole" value=0 checked/>
+            <span>Gamecube</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input type="radio" id="pc" name="gameconsole" value=1/>
+            <span>PC</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input type="radio" id="ps2" name="gameconsole" value=2/>
+            <span>PS2</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input type="radio" id="xbox" name="gameconsole" value=3/>
+            <span>Xbox</span>
+          </label>
+        </p>
+        <div class="card-action">
+          <a class="waves-effect waves-light btn" v-on:click="formsubmit"><i class="material-icons left">file_upload</i>Submit</a>
         </div>
       </div>
-      <div class="file-field input-field">
-        <div class="btn">
-          <span>MASTER.DIR</span>
-          <input class="file-selector" type="file" id="masterdir" name="files[]" />
-        </div>
-      </div>
-      -->
-      <p>MASTER.DAT: <input class="file-selector" type="file" id="masterdat" name="files[]" /></p>
-      <p>MASTER.DIR: <input class="file-selector" type="file" id="masterdir" name="files[]" /></p>
-      <p>
-        <label>
-          <input type="radio" id="gamecube" name="gameconsole" value=0 checked/>
-          <span>Gamecube</span>
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="radio" id="pc" name="gameconsole" value=1/>
-          <span>PC</span>
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="radio" id="ps2" name="gameconsole" value=2/>
-          <span>PS2</span>
-        </label>
-      </p>
-      <p>
-        <label>
-          <input type="radio" id="xbox" name="gameconsole" value=3/>
-          <span>Xbox</span>
-        </label>
-      </p>
-      <!--
-      <input type="radio" id="pc" name="gameconsole" value=1>
-      <label for="console">PC</label><br>
-      <input type="radio" id="ps2" name="gameconsole" value=2>
-      <label for="console">PS2</label><br>
-      <input type="radio" id="xbox" name="gameconsole" value=3>
-      <label for="console">Xbox</label><br>
-      -->
-      <input type="submit">
     </form>
   </div>
 </template>
@@ -107,10 +105,6 @@ export default defineComponent({
                     ) as ShrekSuperSlamCharacterAttackCollection;
                     (attacksGlobal as any).value = attacks;
 
-                    // Disable the event resubmission
-                    if (event.preventDefault)
-                        event.preventDefault();
-
                     // Get the first character alphabetically to navigate to
                     const characterNames = Object.keys(attacks);
                     characterNames.sort();
@@ -130,3 +124,11 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped>
+.card {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 1px;
+}
+</style>

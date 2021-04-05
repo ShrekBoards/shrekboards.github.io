@@ -1,6 +1,6 @@
 <template>
     <div class="download">
-        <button v-on:click="buttonclick">{{ filename }}</button>
+        <a class="waves-effect waves-light btn-large" v-on:click="buttonclick"><i class="material-icons left">file_download</i>{{ filename }}</a>
     </div>
 </template>
 

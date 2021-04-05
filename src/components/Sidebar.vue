@@ -4,14 +4,18 @@
             <router-link v-for="character in characters" :key="character" :to="`/ui/${character}`">
                 <div v-if="selected == character" class="active">
                     <li>
-                        <img :src="`/icons/${character}.png`"/>
-                        {{ character }}
+                        <div class="valign-wrapper">
+                            <img :src="`/icons/${character}.png`"/>
+                            {{ character }}
+                        </div>
                     </li>
                 </div>
                 <div v-else class="inactive">
                     <li>
-                        <img :src="`/icons/${character}.png`"/>
-                        {{ character }}
+                        <div class="valign-wrapper">
+                            <img :src="`/icons/${character}.png`"/>
+                            {{ character }}
+                        </div>
                     </li>
                 </div>
             </router-link>

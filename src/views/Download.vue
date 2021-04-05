@@ -1,8 +1,15 @@
 <template>
     <div class="download">
         <Navbar/>
-        <DownloadButton :filename="'MASTER.DAT'" :data="masterDat"/>
-        <DownloadButton :filename="'MASTER.DIR'" :data="masterDir"/>
+        <div class="row">
+          <div class="col s6 offset-s3">
+            <h2>Download</h2>
+            <div class="card darken-1">
+              <DownloadButton :filename="'MASTER.DAT'" :data="masterDat"/>
+              <DownloadButton :filename="'MASTER.DIR'" :data="masterDir"/>
+            </div>
+          </div>
+        </div>
     </div>
 </template>
 
