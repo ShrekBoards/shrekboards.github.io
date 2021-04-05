@@ -5,8 +5,8 @@
                 <router-link v-if="characterJsonDefined" :to="`/characters/${firstCharacter}`" class="brand-logo">Shab'aint</router-link>
                 <router-link v-else to="/upload" class="brand-logo">Shab'aint</router-link>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><router-link to="/help">Help</router-link></li>
-                    <li><router-link to="/about">About</router-link></li>
+                    <li><router-link to="/help"><i class="material-icons left">help_outline</i>Help</router-link></li>
+                    <li><router-link to="/about"><i class="material-icons left">info_outline</i>About</router-link></li>
                     <li><router-view/></li>
                 </ul>
             </div>
