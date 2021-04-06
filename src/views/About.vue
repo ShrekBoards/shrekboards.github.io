@@ -11,7 +11,7 @@
         </p>
         <p>
           The name is a portmanteau of Shaba Games - the company that developed Shrek SuperSlam - and "'aint",
-          in the style of the Wii Homebrew Nintendont. The name is credited to ShrekBoards community member scrubjr.
+          in the style of the Wii Homebrew Nintendont. The name is credited to ShrekBoards community member scrub.
         </p>
         <p>
           It is developed by <a href="https://github.com/kirbyUK">kirby</a> using Vue 3, TypeScript, WebAssembly and

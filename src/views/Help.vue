@@ -1,7 +1,11 @@
 <template>
   <div class="help">
     <Navbar />
-    <h1>This is a help page</h1>
+    <div class="row">
+      <div class="col s6 offset-s3">
+        <h2>Help</h2>
+      </div>
+    </div>
   </div>
 </template>
 

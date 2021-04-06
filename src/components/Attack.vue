@@ -23,6 +23,38 @@
               </ul>
             </div>
           </li>
+          <!-- Hitboxes -->
+          <li v-if="a['hitboxes'] != null && a['hitboxes'].length > 0">
+            <div class="collapsible-header" v-on:click="expand"><i class="material-icons">keyboard_arrow_right</i>Hitboxes</div>
+            <div class="collapsible-body">
+              <div v-for="hitbox in a['hitboxes']" :key="hitbox" class="hitbox card darken-1">
+                <ul>
+                  <li v-for="field in Object.keys(hitbox)" :key="field">
+                    {{ field }}
+                    <div class="input-field inline">
+                      <input v-model.number="hitbox[field]"/>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <!-- Projectile -->
+          <li v-if="a['projectile'] != null">
+            <div class="collapsible-header" v-on:click="expand"><i class="material-icons">keyboard_arrow_right</i>Projectile</div>
+            <div class="collapsible-body">
+              <div class="projectile">
+                <ul>
+                  <li v-for="field in Object.keys(a['projectile'])" :key="field">
+                    {{ field }}
+                    <div class="input-field inline">
+                      <input v-model.number="a['projectile'][field]"/>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
         </ul>
     </div>
 </template>
@@ -72,4 +104,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.card {
+  padding: 5px;
+}
 </style>
