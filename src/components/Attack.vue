@@ -2,7 +2,11 @@
     <div class="attack">
         <ul class="collapsible">
           <li>
-            <div class="collapsible-header" v-on:click="expand"><i class="material-icons">keyboard_arrow_right</i>{{ a.name }}</div>
+            <div class="collapsible-header">
+              <i class="material-icons iconadd">keyboard_arrow_right</i>
+              <i class="material-icons iconremove">keyboard_arrow_down</i>
+              {{ a.name }}
+            </div>
             <div class="collapsible-body">
               <ul>
                 <!-- Create a form entry for every field in the attack. We start with the text box entries. -->
@@ -25,7 +29,11 @@
           </li>
           <!-- Hitboxes -->
           <li v-if="a['hitboxes'] != null && a['hitboxes'].length > 0">
-            <div class="collapsible-header" v-on:click="expand"><i class="material-icons">keyboard_arrow_right</i>Hitboxes</div>
+            <div class="collapsible-header" v-on:click="expand">
+              <i class="material-icons iconadd">keyboard_arrow_right</i>
+              <i class="material-icons iconremove">keyboard_arrow_down</i>
+              Hitboxes
+            </div>
             <div class="collapsible-body">
               <div v-for="hitbox in a['hitboxes']" :key="hitbox" class="hitbox card darken-1">
                 <ul>
@@ -41,7 +49,11 @@
           </li>
           <!-- Projectile -->
           <li v-if="a['projectile'] != null">
-            <div class="collapsible-header" v-on:click="expand"><i class="material-icons">keyboard_arrow_right</i>Projectile</div>
+            <div class="collapsible-header" v-on:click="expand">
+              <i class="material-icons iconadd">keyboard_arrow_right</i>
+              <i class="material-icons iconremove">keyboard_arrow_down</i>
+              Projectile
+            </div>
             <div class="collapsible-body">
               <div class="projectile">
                 <ul>
@@ -70,31 +82,7 @@ export default defineComponent({
   },
   setup(props) {
       const a = reactive(props.attack);
-      function expand(event: Event) {
-        /**
-         * Onclick handler for expanding and closing an attack entry.
-         *
-         * Modified the arrow icon in the attack box to indicate if the box
-         * is expanded or not.
-         *
-         * Params:
-         *   event: The onclick event passed from Vue.
-         */
-        const button = event.target as HTMLElement;
-        if (button !== null && button.children.length > 0) {
-          const currentIcon = button.children[0].innerHTML;
-          if (currentIcon === "keyboard_arrow_right") {
-            button.children[0].innerHTML = "keyboard_arrow_down";
-          } else {
-            button.children[0].innerHTML = "keyboard_arrow_right";
-          }
-        } else if (button.innerHTML === "keyboard_arrow_right") {
-          button.innerHTML = "keyboard_arrow_down";
-        } else if (button.innerHTML === "keyboard_arrow_down") {
-          button.innerHTML = "keyboard_arrow_right";
-        }
-      }
-      return { a, expand };
+      return { a };
   },
   mounted() {
     const elems = document.querySelectorAll(".collapsible");
@@ -107,4 +95,21 @@ export default defineComponent({
 .card {
   padding: 5px;
 }
+
+.iconadd {
+  display:inline-block ;
+}
+
+.iconremove {
+  display:none !important;
+}
+
+li.active .collapsible-header .material-icons.iconadd{
+  display: none;
+}
+
+li.active .collapsible-header .material-icons.iconremove{
+  display: inline-block !important;
+}
+
 </style>
