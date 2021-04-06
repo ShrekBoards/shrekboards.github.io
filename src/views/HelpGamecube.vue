@@ -13,7 +13,7 @@
           <li>Export the ISO to a folder on your computer.</li>
           <li>Close GCRebuilder by going to Image &rarr; Close.</li>
         </ol>
-        <img class="responsive-img" src="/images/help/gamecube1.png" alt="A screenshot of GCRebuilder showing the loaded Shrek SuperSlam ISO, with the 'root' element right-clicked."/>
+        <img class="responsive-img" src="/images/help/gamecube1.PNG" alt="A screenshot of GCRebuilder showing the loaded Shrek SuperSlam ISO, with the 'root' element right-clicked."/>
 
         <h5>Upload the game files</h5>
         <ol>
@@ -27,7 +27,7 @@
             <li>Select the console as 'Gamecube'.</li>
             <li>Click 'Submit'.</li>
         </ol>
-        <img class="responsive-img" src="/images/help/gamecube2.png" alt="A screenshot of the extracted MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
+        <img class="responsive-img" src="/images/help/gamecube2.PNG" alt="A screenshot of the extracted MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
 
         <h5>Use the tool to make changes</h5>
         <ol>
@@ -38,7 +38,7 @@
             <li>Changes persist as you make them.</li>
             <li>When you are done making changes, click 'Generate'.</li>
         </ol>
-        <img class="responsive-img" src="/images/help/generic1.png" alt="A screenshot of the extracted MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
+        <img class="responsive-img" src="/images/help/generic1.PNG" alt="A screenshot of the extracted MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
 
         <h5>Replace the original game files, and repackage the ISO</h5>
         <ol>
@@ -55,7 +55,7 @@
             <li>Click Root &rarr; Rebuild to generate the ISO.</li>
             <li>You should be able to open your newly-built ISO in Dolphin and try out your changes!</li>
         </ol>
-        <img class="responsive-img" src="/images/help/gamecube3.png" alt="A screenshot of GCRebuilder showing the loaded Shrek SuperSlam ISO, with the 'root' element right-clicked."/>
+        <img class="responsive-img" src="/images/help/gamecube3.PNG" alt="A screenshot of GCRebuilder showing the loaded Shrek SuperSlam ISO, with the 'root' element right-clicked."/>
       </div>
     </div>
   </div>

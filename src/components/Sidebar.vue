@@ -13,7 +13,7 @@
                 <div v-else class="inactive">
                     <li>
                         <div class="valign-wrapper">
-                            <img :src="`/icons/${character}.png`"/>
+                            <img :src="`/images/icons/${character}.png`"/>
                             {{ character }}
                         </div>
                     </li>
