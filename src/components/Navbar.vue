@@ -54,7 +54,10 @@ export default defineComponent({
   },
   mounted() {
     const elems = document.querySelectorAll(".dropdown-trigger");
-    M.Dropdown.init(elems, {});
+    M.Dropdown.init(elems, {
+        constrainWidth: true,
+        coverTrigger: false,
+    });
   }
 });
 </script>
