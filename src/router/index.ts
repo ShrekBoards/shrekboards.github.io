@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import About from '../views/About.vue'
 import Download from '../views/Download.vue'
+import Fields from '../views/Fields.vue'
 import Help from '../views/Help.vue'
 import Upload from '../views/Upload.vue'
 import UI from '../views/Ui.vue'
@@ -35,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/help',
     name: 'Help',
     component: Help
+  },
+  {
+    path: '/help/fields',
+    name: 'Fields',
+    component: Fields
   }
 ]
 
