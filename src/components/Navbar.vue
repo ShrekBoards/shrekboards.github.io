@@ -1,5 +1,7 @@
 <template>
     <ul id="helpdropdown" class="dropdown-content">
+        <li><router-link to="/help">Help</router-link></li>
+        <li class="divider"></li>
         <li><router-link to="/help/gamecube">Gamecube</router-link></li>
         <li><router-link to="/help/pc">PC</router-link></li>
         <li class="divider"></li>
