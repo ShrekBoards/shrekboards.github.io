@@ -1,6 +1,7 @@
 <template>
-    <div class="save" v-if="isEnabled()">
-        <a class="waves-effect waves-light btn" v-on:click="buttonclick"><i class="material-icons left">build</i>Generate</a>
+    <div class="save" v-if="isVisible()">
+        <a v-if="isEnabled()" class="waves-effect waves-light btn" v-on:click="buttonclick"><i class="material-icons left">build</i>Generate</a>
+        <a v-else class="waves-effect waves-light btn disabled" v-on:click="buttonclick"><i class="material-icons left">build</i>Generate</a>
     </div>
 </template>
 
@@ -20,8 +21,15 @@ export default defineComponent({
         /**
          * Function to determine if the button should render at all
          */
+        function isVisible() {
+            return Object.keys((attacksGlobal as any).value).length > 0;
+        }
+
+        /**
+         * Function to determine if the button should be enabled. 
+         */
         function isEnabled() {
-            return router.currentRoute.value.path.startsWith("/character");
+            return !router.currentRoute.value.path.startsWith("/download");
         }
 
         /**
@@ -42,6 +50,7 @@ export default defineComponent({
         }
 
         return {
+            isVisible,
             isEnabled,
             buttonclick,
         }
