@@ -1,11 +1,12 @@
 <template>
   <div class="upload">
-    <form id="theform">
+    <form id="theform" v-on:submit.prevent="formsubmit">
+      <!-- Card content, the upload form -->
       <div class="card darken-1">
         <div class="file-field input-field">
           <div class="btn">
             <span>MASTER.DAT</span>
-            <input type="file" id="masterdat" name="files[]" />
+            <input type="file" id="masterdat" name="files[]" required />
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text">
@@ -14,7 +15,7 @@
         <div class="file-field input-field">
           <div class="btn">
             <span>MASTER.DIR</span>
-            <input type="file" id="masterdir" name="files[]" />
+            <input type="file" id="masterdir" name="files[]" required />
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text">
@@ -44,8 +45,37 @@
             <span>Xbox</span>
           </label>
         </p>
+
+        <!-- Rainbow preload spinner -->
         <div id="upload-preloader" class="preloader-wrapper big loader">
-          <div class="spinner-layer spinner-blue-only">
+          <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <div class="spinner-layer spinner-red">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <div class="spinner-layer spinner-yellow">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <div class="spinner-layer spinner-green">
             <div class="circle-clipper left">
               <div class="circle"></div>
             </div><div class="gap-patch">
@@ -55,8 +85,12 @@
             </div>
           </div>
         </div>
+
+        <!-- Submit button, in the card footer -->
         <div class="card-action">
-          <a class="waves-effect waves-light btn" v-on:click="formsubmit"><i class="material-icons left">file_upload</i>Submit</a>
+          <button class="waves-effect waves-light btn" type="submit" name="action">
+            <i class="material-icons left">file_upload</i>Submit
+          </button>
         </div>
       </div>
     </form>
