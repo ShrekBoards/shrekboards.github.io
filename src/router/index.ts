@@ -3,6 +3,7 @@ import About from '../views/About.vue'
 import Download from '../views/Download.vue'
 import Fields from '../views/HelpFields.vue'
 import Gamecube from '../views/HelpGamecube.vue'
+import PC from '../views/HelpPC.vue'
 import Help from '../views/Help.vue'
 import Upload from '../views/Upload.vue'
 import UI from '../views/Ui.vue'
@@ -47,6 +48,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/help/gamecube',
     name: 'Gamecube',
     component: Gamecube
+  },
+  {
+    path: '/help/pc',
+    name: 'PC',
+    component: PC
   },
 ]
 
