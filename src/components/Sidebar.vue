@@ -5,7 +5,7 @@
                 <div v-if="selected == character" class="active">
                     <li>
                         <div class="valign-wrapper">
-                            <img :src="`/icons/${character}.png`"/>
+                            <img :src="`/images/icons/${character}.png`"/>
                             {{ character }}
                         </div>
                     </li>
