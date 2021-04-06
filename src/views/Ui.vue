@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 import Sidebar from '@/components/Sidebar.vue';
@@ -35,10 +35,10 @@ export default defineComponent({
       type: String
     }
   },
-  setup(props) {
+  setup() {
       // If no character attacks JSON has been generated, redirect to the upload form
-      const attacksGlobal = inject("attacks");
-      if (Object.keys((attacksGlobal as any).value).length == 0) {
+      const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
+      if (Object.keys(attacksGlobal.value).length == 0) {
           const router = useRouter();
           router.replace({ name: "Upload" });
       }

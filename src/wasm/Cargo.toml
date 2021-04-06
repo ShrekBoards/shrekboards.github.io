@@ -3,6 +3,9 @@ name = "shreksuperslam_webapp"
 version = "0.1.0"
 authors = ["Alex Kerr <kirby@cpan.org>"]
 edition = "2018"
+description = "WebAssembly wrapper library around the shrek-superslam crate"
+repository = "https://github.com/ShrekBoards/shrekboards.github.io"
+license = "ISC"
 
 [lib]
 crate-type = ["cdylib", "rlib"]

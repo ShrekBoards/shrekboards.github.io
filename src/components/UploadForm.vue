@@ -102,18 +102,18 @@
 </template>
 
 <script lang="ts">
-import { ShrekSuperSlamCharacterAttackCollection } from "../types"
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ShrekSuperSlamCharacterAttackCollection } from "../types"
 
 export default defineComponent({
     name: 'UploadForm',
     setup() {
         const wasmExtractCharacterAttacks = inject("wasmExtractCharacterAttacks") as Function;
-        const masterDatGlobal = inject("masterDat");
-        const masterDirGlobal = inject("masterDir");
-        const consoleGlobal = inject("console");
-        const attacksGlobal = inject("attacks");
+        const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
+        const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
+        const consoleGlobal = inject("console") as Ref<number>;
+        const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
         const router = useRouter();
         /**
          * Enables the preloader element.
@@ -139,10 +139,10 @@ export default defineComponent({
          * Resets the program state.
          */
         function resetState() {
-          (masterDatGlobal as any).value = new Uint8Array();
-          (masterDirGlobal as any).value = new Uint8Array();
-          (consoleGlobal as any).value = 0;
-          (attacksGlobal as any).value = {};
+          masterDatGlobal.value = new Uint8Array();
+          masterDirGlobal.value = new Uint8Array();
+          consoleGlobal.value = 0;
+          attacksGlobal.value = {};
         }
 
         /**
@@ -169,9 +169,9 @@ export default defineComponent({
         function fileLoadCompleteCall(masterDat: Uint8Array, masterDir: Uint8Array, gameconsole: number) {
           try {
             // Save off the form inputs
-            (masterDatGlobal as any).value = masterDat;
-            (masterDirGlobal as any).value = masterDir;
-            (consoleGlobal as any).value = gameconsole;
+            masterDatGlobal.value = masterDat;
+            masterDirGlobal.value = masterDir;
+            consoleGlobal.value = gameconsole;
 
             // Submit to wasm function and store generated attack JSON
             const attacks = wasmExtractCharacterAttacks(
@@ -179,7 +179,7 @@ export default defineComponent({
                 masterDir,
                 gameconsole
             ) as ShrekSuperSlamCharacterAttackCollection;
-            (attacksGlobal as any).value = attacks;
+            attacksGlobal.value = attacks;
             
             // Get the first character alphabetically to navigate to
             const characterNames = Object.keys(attacks);
@@ -212,13 +212,13 @@ export default defineComponent({
          * Params:
          *   event: The formsubmit event passed from Vue.
          */
-        function formsubmit(event: Event) {
+        function formsubmit() {
             // Enable the preloader
             enablePreloader();
 
             // Get the console version from the form
             let gameconsole = 0;
-            document.getElementsByName("gameconsole").forEach((item, _) => {
+            document.getElementsByName("gameconsole").forEach((item, ) => {
                 if ((item as HTMLInputElement).checked) {
                     gameconsole = parseInt((item as HTMLInputElement).value);
                 }

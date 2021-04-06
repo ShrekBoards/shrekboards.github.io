@@ -23,7 +23,7 @@
             <li>Select the console as 'PC'.</li>
             <li>Click 'Submit'.</li>
         </ol>
-        <img class="responsive-img" src="/images/help/pc1.PNG" alt="A screenshot of the MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
+        <img class="responsive-img" src="/images/help/pc1.png" alt="A screenshot of the MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
 
         <h5>Use the tool to make changes</h5>
         <ol>
@@ -34,7 +34,7 @@
             <li>Changes persist as you make them.</li>
             <li>When you are done making changes, click 'Generate'.</li>
         </ol>
-        <img class="responsive-img" src="/images/help/generic1.PNG" alt="A screenshot of the extracted MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
+        <img class="responsive-img" src="/images/help/generic1.png" alt="A screenshot of the extracted MASTER.DAT and MASTER.DIR files being uploaded to the tool."/>
 
         <h5>Replace the original game files</h5>
         <ol>

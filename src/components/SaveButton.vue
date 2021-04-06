@@ -6,23 +6,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 
 export default defineComponent({
     name: "SaveButton",
     setup() {
         const wasmRecreateGameFiles = inject("wasmRecreateGameFiles") as Function;
-        const masterDatGlobal = inject("masterDat");
-        const masterDirGlobal = inject("masterDir");
-        const consoleGlobal = inject("console");
-        const attacksGlobal = inject("attacks");
+        const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
+        const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
+        const consoleGlobal = inject("console") as Ref<number>;
+        const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
         const router = useRouter();
         /**
          * Function to determine if the button should render at all
          */
         function isVisible() {
-            return Object.keys((attacksGlobal as any).value).length > 0;
+            return Object.keys(attacksGlobal.value).length > 0;
         }
 
         /**
@@ -35,16 +36,16 @@ export default defineComponent({
         /**
          * Button click handler
          */
-        function buttonclick(event: Event) {
+        function buttonclick() {
             const newFiles = wasmRecreateGameFiles(
-                (masterDatGlobal as any).value,
-                (masterDirGlobal as any).value,
-                (consoleGlobal as any).value,
-                (attacksGlobal as any).value
+                masterDatGlobal.value,
+                masterDirGlobal.value,
+                consoleGlobal.value,
+                attacksGlobal.value
             );
 
-            (masterDatGlobal as any).value = (newFiles[0] as Uint8Array);
-            (masterDirGlobal as any).value = (newFiles[1] as Uint8Array);
+            masterDatGlobal.value = (newFiles[0] as Uint8Array);
+            masterDirGlobal.value = (newFiles[1] as Uint8Array);
 
             router.push("/download");
         }

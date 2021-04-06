@@ -15,27 +15,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import M from 'materialize-css';
+import { ShrekSuperSlamCharacterAttackCollection } from "../types"
 
 export default defineComponent({
     name: "ResetButton",
     setup() {
-        const masterDatGlobal = inject("masterDat");
-        const masterDirGlobal = inject("masterDir");
-        const consoleGlobal = inject("console");
-        const attacksGlobal = inject("attacks");
+        const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
+        const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
+        const consoleGlobal = inject("console") as Ref<number>;
+        const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
         const router = useRouter();
         /**
          * Function to determine if the state has been cleared or not.
          */
         function stateCleared() {
             return (
-                ((masterDatGlobal as any).value.length == 0)
-                && ((masterDirGlobal as any).value.length == 0)
-                && (((consoleGlobal as any).value) == 0)
-                && (Object.keys((attacksGlobal as any).value).length == 0)
+                (masterDatGlobal.value.length == 0)
+                && (masterDirGlobal.value.length == 0)
+                && (consoleGlobal.value == 0)
+                && (Object.keys(attacksGlobal.value).length == 0)
             );
         }
 
@@ -46,10 +47,10 @@ export default defineComponent({
          */
         function buttonclick() {
             if (!stateCleared()) {
-                (masterDatGlobal as any).value = new Uint8Array();
-                (masterDirGlobal as any).value = new Uint8Array();
-                (consoleGlobal as any).value = 0;
-                (attacksGlobal as any).value = {};
+                masterDatGlobal.value = new Uint8Array();
+                masterDirGlobal.value = new Uint8Array();
+                consoleGlobal.value = 0;
+                attacksGlobal.value = {};
                 router.push({name: "Upload"});
             }
         }

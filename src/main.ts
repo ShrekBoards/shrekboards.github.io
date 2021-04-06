@@ -1,4 +1,4 @@
-import { createApp, ref, resolveDirective } from 'vue'
+import { createApp, ref } from 'vue'
 import router from './router'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'

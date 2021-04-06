@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, readonly } from 'vue';
+import { defineComponent, inject, readonly, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import DownloadButton from '@/components/DownloadButton.vue';
 import Navbar from '@/components/Navbar.vue';
@@ -29,10 +29,10 @@ export default defineComponent({
       Navbar,
   },
   setup() {
-    const masterDatGlobal = inject("masterDat");
-    const masterDirGlobal = inject("masterDir");
-    const masterDat = readonly((masterDatGlobal as any).value);
-    const masterDir = readonly((masterDirGlobal as any).value);
+    const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
+    const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
+    const masterDat = readonly(masterDatGlobal.value);
+    const masterDir = readonly(masterDirGlobal.value);
 
     // If the MASTER.DAT or MASTER.DIR are not generated, redirect to the upload page
     if (masterDat.length == 0 || masterDat.length == 0) {
