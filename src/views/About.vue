@@ -19,7 +19,7 @@
           no data is sent to any servers.
         </p>
         <p>
-          View the source code on <a href="https://github.com/ShrekBoards/webapp">GitHub</a>.
+          View the source code on <a href="https://github.com/ShrekBoards/shrekboards.github.io">GitHub</a>.
         </p>
         <p>
           This web interface is effectively a GUI around the

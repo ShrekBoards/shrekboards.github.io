@@ -1,24 +1,9 @@
-# shreksuperslam-app
+# shrekboards.github.io
 
-## Project setup
-```
-npm install
-```
+Web application for modifying character attack values in Shrek SuperSlam.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Built using Vue 3, TypeScript, Materialize CSS and WebAssembly. This application serves
+as a wrapper around the [shrek-superslam](https://github.com/ShrekBoards/shrek-superslam)
+Rust crate, which is compiled to WASM and handles the heavy lifting of parsing and
+reconstructing the files. A binary version of this application is available as an example
+program in that repository.
