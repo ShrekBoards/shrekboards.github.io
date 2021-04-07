@@ -62,6 +62,7 @@ export default defineComponent({
   mounted() {
     const elems = document.querySelectorAll(".dropdown-trigger");
     M.Dropdown.init(elems, {
+        closeOnClick: true,
         constrainWidth: true,
         coverTrigger: false,
     });

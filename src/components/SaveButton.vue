@@ -1,5 +1,18 @@
 <template>
     <div class="save" v-if="isVisible()">
+        <div id="savemodal" class="modal">
+            <div class="modal-content">
+                <h3><i class="material-icons left medium">error</i>Error</h3>
+                <p>
+                    There was an error generating the new files. All fields are numeric, please ensure
+                    all fields are only decimal numbers and try again. If the problem persists, try resetting
+                    and starting again.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect waves btn-flat"><i class="material-icons left">check</i>Accept</a>
+            </div>
+        </div>
         <a v-if="isEnabled()" class="waves-effect waves-light btn" v-on:click="buttonclick"><i class="material-icons left">build</i>Generate</a>
         <a v-else class="waves-effect waves-light btn disabled" v-on:click="buttonclick"><i class="material-icons left">build</i>Generate</a>
     </div>
@@ -8,6 +21,7 @@
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
+import M from 'materialize-css';
 import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 
 export default defineComponent({
@@ -37,17 +51,26 @@ export default defineComponent({
          * Button click handler
          */
         function buttonclick() {
-            const newFiles = wasmRecreateGameFiles(
-                masterDatGlobal.value,
-                masterDirGlobal.value,
-                consoleGlobal.value,
-                attacksGlobal.value
-            );
+            try {
+                const newFiles = wasmRecreateGameFiles(
+                    masterDatGlobal.value,
+                    masterDirGlobal.value,
+                    consoleGlobal.value,
+                    attacksGlobal.value
+                );
 
-            masterDatGlobal.value = (newFiles[0] as Uint8Array);
-            masterDirGlobal.value = (newFiles[1] as Uint8Array);
+                masterDatGlobal.value = (newFiles[0] as Uint8Array);
+                masterDirGlobal.value = (newFiles[1] as Uint8Array);
 
-            router.push("/download");
+                router.push("/download");
+            } catch (e) {
+                // Pop up the error modal
+                const saveModalElement = document.getElementById("savemodal");
+                if (saveModalElement !== null) {
+                    const modal = M.Modal.getInstance(saveModalElement);
+                    modal.open();
+                }
+            }
         }
 
         return {
@@ -55,6 +78,10 @@ export default defineComponent({
             isEnabled,
             buttonclick,
         }
+    },
+    mounted() {
+        const elems = document.querySelectorAll(".modal");
+        M.Modal.init(elems, {});
     }
 })
 </script>
@@ -62,5 +89,18 @@ export default defineComponent({
 <style scoped>
 .save {
     float: right;
+}
+
+.modal {
+    color: black;
+    overflow-y: unset;
+}
+
+.modal-content > p {
+    line-height: 1.5;
+}
+
+.material-icons {
+    font-size: unset;
 }
 </style>

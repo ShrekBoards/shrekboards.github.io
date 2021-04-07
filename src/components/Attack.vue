@@ -14,7 +14,7 @@
                   <div v-if="field !== 'name' && field !== 'hitboxes' && field !== 'projectile'">
                     {{ field }}
                     <div class="input-field inline">
-                      <input v-model.number="a[field]"/>
+                      <input type="number" step="any" class="validate" v-model.number="a[field]"/>
                     </div>
                   </div>
                 </li>
@@ -110,6 +110,17 @@ li.active .collapsible-header .material-icons.iconadd{
 
 li.active .collapsible-header .material-icons.iconremove{
   display: inline-block !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 </style>

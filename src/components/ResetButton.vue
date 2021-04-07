@@ -1,6 +1,6 @@
 <template>
     <div v-if="!stateCleared()" class="reset">
-        <div id="modal1" class="modal">
+        <div id="resetmodal" class="modal">
             <div class="modal-content">
                 <h3><i class="material-icons left medium">warning</i>Reset</h3>
                 <p>This will reset all changes made and ask you to reupload the original game files. Are you sure?</p>
@@ -10,7 +10,7 @@
                 <a class="modal-close waves-effect waves-green btn-flat" v-on:click="buttonclick"><i class="material-icons left">check</i>Confirm</a>
             </div>
         </div>
-        <a class="waves-effect waves-light btn red darken-1 modal-trigger" data-target="modal1"><i class="material-icons left">clear</i>Reset</a>
+        <a class="waves-effect waves-light btn red darken-1 modal-trigger" data-target="resetmodal"><i class="material-icons left">clear</i>Reset</a>
     </div>
 </template>
 
