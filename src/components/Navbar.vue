@@ -10,8 +10,14 @@
     <div class="nav navbar-fixed">
         <nav>
             <div class="nav-wrapper">
-                <router-link v-if="characterJsonDefined" :to="`/characters/${firstCharacter}`" class="brand-logo">Shab'aint</router-link>
-                <router-link v-else to="/upload" class="brand-logo">Shab'aint</router-link>
+                <router-link v-if="characterJsonDefined" :to="`/characters/${firstCharacter}`">
+                    <img src="/images/logo.png" class="logo" />
+                    <div class="brand-logo">Shab'aint</div>
+                </router-link>
+                <router-link v-else to="/upload">
+                    <img src="/images/logo.png" class="logo" />
+                    <div class="brand-logo">Shab'aint</div>
+                </router-link>
                 <ul id="nav-mobile" class="right">
                     <li><ResetButton/></li>
                     <li><SaveButton/></li>
@@ -62,3 +68,10 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+img.logo {
+    width: 54px;
+    margin: 5px;
+}
+</style>
