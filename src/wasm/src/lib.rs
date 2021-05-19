@@ -14,7 +14,7 @@ pub fn extract_character_attacks(master_dat_bytes: &[u8], master_dir_bytes: &[u8
     console_error_panic_hook::set_once();
 
     let console = console_from_value(console_num);
-    let master_dir = MasterDir::from_bytes(master_dir_bytes, console);
+    let master_dir = MasterDir::from_bytes(master_dir_bytes, console).unwrap();
     let master_dat = MasterDat::from_bytes(master_dat_bytes, master_dir);
     JsValue::from_serde(&parse_attacks(&master_dat, console)).unwrap()
 }
@@ -30,7 +30,7 @@ pub fn recreate_game_files(master_dat_bytes: &[u8], master_dir_bytes: &[u8], con
     console_error_panic_hook::set_once();
 
     let console = console_from_value(console_num);
-    let master_dir = MasterDir::from_bytes(master_dir_bytes, console);
+    let master_dir = MasterDir::from_bytes(master_dir_bytes, console).unwrap();
     let mut master_dat = MasterDat::from_bytes(master_dat_bytes, master_dir);
     let attacks: HashMap<String, Vec<AttackMoveType>> = character_attacks.into_serde().unwrap();
     let (new_master_dat_bytes, new_master_dir_bytes) = insert_new_attacks(&mut master_dat, console, &attacks);
@@ -65,7 +65,7 @@ fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, 
 
             // Read the player.db.bin file, grab all the Game::AttackMoveType
             // objects and convert them to JSON objects
-            let bin = Bin::new(master_dat.decompressed_file(&filepath).unwrap(), console);
+            let bin = Bin::new(master_dat.decompressed_file(&filepath).unwrap(), console).unwrap();
             let objects = bin
                 .get_all_objects_of_type::<AttackMoveType>()
                 .into_iter()
@@ -84,7 +84,7 @@ fn insert_new_attacks(master_dat: &mut MasterDat, console: Console, attacks: &Ha
     for (character, attacks) in attacks {
         // Read the player.db.bin file for this character
         let filename = format!("data\\players\\{}\\player.db.bin", character);
-        let mut bin = Bin::new(master_dat.decompressed_file(&filename).unwrap(), console);
+        let mut bin = Bin::new(master_dat.decompressed_file(&filename).unwrap(), console).unwrap();
 
         // Collect every Game::AttackMoveType object in the player.db.bin file,
         // along with the attack's offset within the file
@@ -115,5 +115,5 @@ fn insert_new_attacks(master_dat: &mut MasterDat, console: Console, attacks: &Ha
             );
         }
     }
-    master_dat.to_bytes()
+    master_dat.to_bytes().unwrap()
 }
