@@ -156,6 +156,15 @@ export default defineComponent({
         }
 
         /**
+         * Actions to run in the event of an error.
+         */
+        function error() {
+            disablePreloader();
+            resetState();
+            displayErrorMessage();
+        }
+
+        /**
          * Function to call once the two files from the form have completed loading.
          *
          * Transforms the loaded bytes to the character attack JSON, and stores the
@@ -185,20 +194,17 @@ export default defineComponent({
             const characterNames = Object.keys(attacks);
             characterNames.sort();
 
-            // Navigate to the main UI
-            router.push({
-                name: "UI",
-                params: { selectedCharacter: characterNames[0] }
-            });
+            if (characterNames.length > 0) {
+              // Navigate to the main UI
+              router.push({
+                  name: "UI",
+                  params: { selectedCharacter: characterNames[0] }
+              });
+            } else {
+              error();
+            }
           } catch (e) {
-            // Disable the preloader
-            disablePreloader();
-
-            // Reset the state
-            resetState();
-
-            // Display the error message
-            displayErrorMessage();
+            error();
           }
         }
 
