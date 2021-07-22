@@ -30,6 +30,10 @@
             up, the larger the fast, negative goes down, the smaller the faster.
           </li>
           <li>
+            The <b>stun</b> is the amount of time, in seconds, that the attacks stuns the opponent for. Stun in this
+            context refers to the state where a character is unable to act, and has stars circling their heads.
+          </li>
+          <li>
             If a move is <b>disabled</b>, then inputting it causes nothing to happen.
           </li>
           <li>
