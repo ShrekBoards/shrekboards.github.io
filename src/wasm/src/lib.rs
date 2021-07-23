@@ -56,7 +56,16 @@ fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, 
 
     // Enumerate all files in the MASTER.DAT to find the player.db.bin files
     for filepath in master_dat.files() {
-        let mut iter = filepath.rsplit('\\').take(2);
+        // Due to an old bug in the Rust library repackage code, some repackaged
+        // versions use forward slashes rather than backslashes, so try and
+        // accomodate those.
+        //
+        // <https://github.com/ShrekBoards/shrek-superslam/commit/0fb54ebd882f6eb780201bf0f0172750d7af4e05>
+        let mut iter = if filepath.contains('/') && !filepath.contains('\\') {
+            filepath.rsplit('/').take(2)
+        } else {
+            filepath.rsplit('\\').take(2)
+        };
         let filename = iter.next().unwrap();
 
         if filename == "player.db.bin" {
