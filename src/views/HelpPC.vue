@@ -17,9 +17,9 @@
             </li>
             <li>
                 Make a copy of the MASTER.DAT and MASTER.DIR files and put them somewhere safe. These are the files we
-                will be overwriting, so we need to do this to keep the originals!
+                will be overwriting, so you need to do this to keep the originals!
             </li>
-            <li>On the homepage of this site and upload the MASTER.DAT and MASTER.DIR files from the folder.</li>
+            <li>On the homepage of this site, upload the MASTER.DAT and MASTER.DIR files from the folder.</li>
             <li>Select the console as 'PC'.</li>
             <li>Click 'Submit'.</li>
         </ol>

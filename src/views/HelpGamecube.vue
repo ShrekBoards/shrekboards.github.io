@@ -8,7 +8,7 @@
         <h5>Extract the SuperSlam ISO</h5>
         <ol>
           <li>Open GCRebuilder.</li>
-          <li>Click Image &rarr; Open, and select you Shrek SuperSlam Gamecube ISO.</li>
+          <li>Click Image &rarr; Open, and select your Shrek SuperSlam Gamecube ISO.</li>
           <li>Right click on 'root' (with the picture of the disk) in the right-hand pane and click 'Export'.</li>
           <li>Export the ISO to a folder on your computer.</li>
           <li>Close GCRebuilder by going to Image &rarr; Close.</li>
@@ -21,9 +21,9 @@
             <li>Go to the 'data' folder within.</li>
             <li>
                 Make a copy of the MASTER.DAT and MASTER.DIR files and put them somewhere safe. These are the files we
-                will be overwriting, so we need to do this to keep the originals!
+                will be overwriting, so you need to do this to keep the originals!
             </li>
-            <li>On the homepage of this site and upload the MASTER.DAT and MASTER.DIR files from the folder.</li>
+            <li>On the homepage of this site, upload the MASTER.DAT and MASTER.DIR files from the extracted folder.</li>
             <li>Select the console as 'Gamecube'.</li>
             <li>Click 'Submit'.</li>
         </ol>
