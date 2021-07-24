@@ -6,6 +6,7 @@
         <li><router-link to="/help/pc">PC</router-link></li>
         <li class="divider"></li>
         <li><router-link to="/help/fields">Fields</router-link></li>
+        <li><router-link to="/help/options">Options</router-link></li>
     </ul>
     <div class="nav navbar-fixed">
         <nav>

@@ -46,6 +46,33 @@
           </label>
         </p>
 
+        <!-- Additional options dropdown -->
+        <div class="options">
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header">
+                <i class="material-icons iconadd">keyboard_arrow_right</i>
+                <i class="material-icons iconremove">keyboard_arrow_down</i>
+                Options
+              </div>
+              <div class="collapsible-body">
+                For more information on these options, see the <router-link to="/help/options">Options</router-link> help.
+
+                <!-- Previous JSON file upload -->
+                <div class="file-field input-field">
+                  <div class="btn">
+                    <span>attack.json</span>
+                    <input type="file" id="previous" name="files[]" />
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
         <!-- Rainbow preload spinner -->
         <div id="upload-preloader" class="preloader-wrapper big loader">
           <div class="spinner-layer spinner-blue">
@@ -105,6 +132,7 @@
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { ShrekSuperSlamCharacterAttackCollection } from "../types"
+import M from 'materialize-css';
 
 export default defineComponent({
     name: 'UploadForm',
@@ -115,6 +143,7 @@ export default defineComponent({
         const consoleGlobal = inject("console") as Ref<number>;
         const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
         const router = useRouter();
+
         /**
          * Enables the preloader element.
          */
@@ -175,19 +204,29 @@ export default defineComponent({
          *   masterDir: The loaded bytes of the MASTER.DIR file.
          *   gameconsole: An integer between 1 and 4 representing the selected console version.
          */
-        function fileLoadCompleteCall(masterDat: Uint8Array, masterDir: Uint8Array, gameconsole: number) {
+        function fileLoadCompleteCall(
+          masterDat: Uint8Array,
+          masterDir: Uint8Array,
+          gameconsole: number,
+          previous: ShrekSuperSlamCharacterAttackCollection | null,
+        ) {
           try {
             // Save off the form inputs
             masterDatGlobal.value = masterDat;
             masterDirGlobal.value = masterDir;
             consoleGlobal.value = gameconsole;
 
-            // Submit to wasm function and store generated attack JSON
-            const attacks = wasmExtractCharacterAttacks(
+            // Read the attacks from the MASTER.DAT and DIR pair using the wasm
+            // function.
+            const masterDatAttacks = wasmExtractCharacterAttacks(
                 masterDat,
                 masterDir,
                 gameconsole
             ) as ShrekSuperSlamCharacterAttackCollection;
+
+            // If we have a previous attacks JSON file, use that, otherwise
+            // use the JSON generated from parsing the file.
+            const attacks = previous !== null ? previous : masterDatAttacks;
             attacksGlobal.value = attacks;
             
             // Get the first character alphabetically to navigate to
@@ -233,17 +272,34 @@ export default defineComponent({
             // Load the files out of the form
             const masterDirFilereader = document.getElementById("masterdir") as HTMLInputElement;
             const masterDatFilereader = document.getElementById("masterdat") as HTMLInputElement;
-            if (masterDirFilereader != null && masterDatFilereader != null &&
-                  masterDirFilereader.files != null && masterDatFilereader.files != null) {
+            const previousJsonFilereader = document.getElementById("previous") as HTMLInputElement;
+            if (masterDirFilereader !== null && masterDatFilereader !== null && previousJsonFilereader !== null &&
+                  masterDirFilereader.files !== null && masterDatFilereader.files !== null && previousJsonFilereader.files !== null) {
+
+                // The MASTER.DAT and MASTER.DIR are mandatory, read them out.
                 const masterDir = masterDirFilereader.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
                 const masterDat = masterDatFilereader.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
-                Promise.all([masterDir, masterDat]).then((values) => fileLoadCompleteCall(values[1], values[0], gameconsole));
+
+                // The previous attacks JSON file is optional, so there might
+                // not be any, only read if out if there is one.
+                const previousJson: Promise<ShrekSuperSlamCharacterAttackCollection | null> = previousJsonFilereader.files.length > 0 ?
+                  previousJsonFilereader.files[0].text().then(text => { console.log(text); return JSON.parse(text) as ShrekSuperSlamCharacterAttackCollection; }) :
+                  Promise.resolve(null);
+
+                // With all the files read (or they will be once the associated
+                // promise resolves), do the final bit of processing.
+                Promise.all([masterDir, masterDat, previousJson])
+                  .then((values) => fileLoadCompleteCall(values[1], values[0], gameconsole, values[2]));
             }
         }
 
         return {
             formsubmit,
         };
+    },
+    mounted() {
+      const elems = document.querySelectorAll(".collapsible");
+      M.Collapsible.init(elems, {});
     },
 });
 </script>
@@ -267,5 +323,32 @@ export default defineComponent({
 #error {
   color: red;
   visibility: hidden;
+}
+
+.iconadd {
+  display:inline-block ;
+}
+
+.iconremove {
+  display:none !important;
+}
+
+li.active .collapsible-header .material-icons.iconadd{
+  display: none;
+}
+
+li.active .collapsible-header .material-icons.iconremove{
+  display: inline-block !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 </style>

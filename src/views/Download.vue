@@ -11,6 +11,12 @@
                 <li><div class="valign-wrapper"><DownloadButton :filename="'MASTER.DIR'" :data="masterDir"/>{{ Math.round(masterDir.length / Math.pow(2, 10)) }} KB</div></li>
               </ul>
             </div>
+            <p>These files are optional, use them if you want to reload your changes at a later date.</p>
+            <div class="card darken-1">
+              <ul>
+                <li><div class="valign-wrapper"><DownloadButton :displayname="'attacks.json'" :filename="`shabaint_attacks_${new Date().toISOString()}.json`" :json="attacks"/>{{ Math.round(attacks.length / Math.pow(2, 10)) }} KB</div></li>
+              </ul>
+            </div>
           </div>
         </div>
     </div>
@@ -19,6 +25,7 @@
 <script lang="ts">
 import { defineComponent, inject, readonly, Ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ShrekSuperSlamCharacterAttackCollection } from "../types"
 import DownloadButton from '@/components/DownloadButton.vue';
 import Navbar from '@/components/Navbar.vue';
 
@@ -31,8 +38,10 @@ export default defineComponent({
   setup() {
     const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
     const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
+    const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
     const masterDat = readonly(masterDatGlobal.value);
     const masterDir = readonly(masterDirGlobal.value);
+    const attacks = JSON.stringify(attacksGlobal.value);
 
     // If the MASTER.DAT or MASTER.DIR are not generated, redirect to the upload page
     if (masterDat.length == 0 || masterDat.length == 0) {
@@ -43,6 +52,7 @@ export default defineComponent({
     return {
         masterDat,
         masterDir,
+        attacks,
     }
   }
 });

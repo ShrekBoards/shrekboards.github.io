@@ -3,8 +3,9 @@ import About from '../views/About.vue'
 import Download from '../views/Download.vue'
 import Fields from '../views/HelpFields.vue'
 import Gamecube from '../views/HelpGamecube.vue'
-import PC from '../views/HelpPC.vue'
 import Help from '../views/Help.vue'
+import Options from '../views/HelpOptions.vue'
+import PC from '../views/HelpPC.vue'
 import Upload from '../views/Upload.vue'
 import UI from '../views/Ui.vue'
 
@@ -54,6 +55,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PC',
     component: PC
   },
+  {
+    path: '/help/options',
+    name: 'Options',
+    component: Options
+  }
 ]
 
 const router = createRouter({
