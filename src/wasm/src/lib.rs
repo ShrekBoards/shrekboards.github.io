@@ -80,7 +80,7 @@ fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, 
                 .into_iter()
                 .map(|(_, a)| a)
                 .collect();
-
+ 
             attacks.insert(character.to_owned(), objects);
         }
     }

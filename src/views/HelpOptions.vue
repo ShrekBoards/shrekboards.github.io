@@ -27,6 +27,28 @@
           dropdown and upload your downloaded JSON file by clicking the
           ATTACK.JSON upload button.
         </p>
+        <h3>Advanced Mode</h3>
+        <p>
+          The attack objects are a collection of about 300 bytes, comprising of
+          many fields, mostly in the form of decimal numbers. Which numbers
+          correspond to what property of the attack is typically worked out
+          through trial-and-error, by tweaking the values and seeing what
+          happens. This is a long process for one person, especially when that
+          one person doesn't actually play the game and doesn't realise some
+          changes.
+        </p>
+        <p>
+          Enter advanced mode. Enabling this gives access to some (not all!)
+          'unknown' fields. These are fields that exist in the attack, but it
+          is not known what they control. You can then modify these values,
+          and work out what they do for yourself. If you manage to deduce what
+          a field does, please open an
+          <a href="https://github.com/ShrekBoards/shrek-superslam/issues">issue</a>
+          on the main library explaining what the field does, or message kirby.
+        </p>
+        <p>
+          Hopefully this will allow new fields to be discovered much sooner!
+        </p>
       </div>
     </div>
   </div>

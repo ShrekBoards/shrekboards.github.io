@@ -11,7 +11,8 @@
               <ul>
                 <!-- Create a form entry for every field in the attack. We start with the text box entries. -->
                 <li v-for="field in Object.keys(a).filter(k => typeof a[k] != 'boolean')" :key="field">
-                  <div v-if="field !== 'name' && field !== 'hitboxes' && field !== 'projectile'">
+                  <div v-if="field !== 'name' && field !== 'hitboxes' && field !== 'projectile' &&
+                      (!field.startsWith('unknown') || (field.startsWith('unknown') && advancedModeEnabled))">
                     {{ field }}
                     <div class="input-field inline">
                       <input type="number" step="any" class="validate" v-model.number="a[field]"/>
@@ -72,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, inject, Ref, reactive } from 'vue';
 import M from 'materialize-css';
 
 export default defineComponent({
@@ -82,7 +83,8 @@ export default defineComponent({
   },
   setup(props) {
       const a = reactive(props.attack);
-      return { a };
+      const advancedModeEnabled = (inject("advancedModeEnabled") as Ref<boolean>).value;
+      return { a, advancedModeEnabled };
   },
   mounted() {
     const elems = document.querySelectorAll(".collapsible");

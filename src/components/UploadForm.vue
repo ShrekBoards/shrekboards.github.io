@@ -68,6 +68,12 @@
                     <input class="file-path validate" type="text">
                   </div>
                 </div>
+
+                <!-- Advanced mode toggle -->
+                <label>
+                  <input id="advanced" class="filled-in" type="checkbox"/>
+                  <span>Advanced Mode</span>
+                </label>
               </div>
             </li>
           </ul>
@@ -142,6 +148,7 @@ export default defineComponent({
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
         const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
+        const advancedModeEnabledGlobal = inject("advancedModeEnabled") as Ref<boolean>;
         const router = useRouter();
 
         /**
@@ -203,18 +210,22 @@ export default defineComponent({
          *   masterDat: The loaded bytes of the MASTER.DAT file.
          *   masterDir: The loaded bytes of the MASTER.DIR file.
          *   gameconsole: An integer between 1 and 4 representing the selected console version.
+         *   previous: The previously generated JSON to use, if any.
+         *   advancedModeEnabled: True to enable advanced mode (shows unknown fields), false to not.
          */
         function fileLoadCompleteCall(
           masterDat: Uint8Array,
           masterDir: Uint8Array,
           gameconsole: number,
           previous: ShrekSuperSlamCharacterAttackCollection | null,
+          advancedModeEnabled: boolean,
         ) {
           try {
             // Save off the form inputs
             masterDatGlobal.value = masterDat;
             masterDirGlobal.value = masterDir;
             consoleGlobal.value = gameconsole;
+            advancedModeEnabledGlobal.value = advancedModeEnabled;
 
             // Read the attacks from the MASTER.DAT and DIR pair using the wasm
             // function.
@@ -269,6 +280,9 @@ export default defineComponent({
                 }
             });
 
+            // Check if advanced mode is enabled
+            const advancedModeEnabled = (document.getElementById("advanced") as HTMLInputElement)?.checked ?? false;
+
             // Load the files out of the form
             const masterDirFilereader = document.getElementById("masterdir") as HTMLInputElement;
             const masterDatFilereader = document.getElementById("masterdat") as HTMLInputElement;
@@ -289,7 +303,7 @@ export default defineComponent({
                 // With all the files read (or they will be once the associated
                 // promise resolves), do the final bit of processing.
                 Promise.all([masterDir, masterDat, previousJson])
-                  .then((values) => fileLoadCompleteCall(values[1], values[0], gameconsole, values[2]));
+                  .then((values) => fileLoadCompleteCall(values[1], values[0], gameconsole, values[2], advancedModeEnabled));
             }
         }
 
