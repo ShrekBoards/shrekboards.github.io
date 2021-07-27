@@ -91,9 +91,23 @@ fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, 
 /// Insert the given `attacks` into the given MASTER.DAT file for the given `console`.
 fn insert_new_attacks(master_dat: &mut MasterDat, console: Console, attacks: &HashMap<String, Vec<AttackMoveType>>) -> (Vec<u8>, Vec<u8>) {
     for (character, attacks) in attacks {
+        // Determine the correct filename. Due to a bug in older versions of
+        // the repackaging code in the shrek-superslam crate, the filename
+        // may use forward slashes. We use compressed_file to check for the
+        // existence of the file because its quicker.
+        let filename1 = format!("data\\players\\{}\\player.db.bin", character);
+        let filename2 = format!("data/players/{}/player.db.bin", character);
+        let filename = if master_dat.compressed_file(&filename1).is_some() {
+            filename1
+        } else if master_dat.compressed_file(&filename2).is_some() {
+            filename2
+        } else {
+            panic!("Could not find file '{}' in MASTER.DAT", filename1);
+        };
+
         // Read the player.db.bin file for this character
-        let filename = format!("data\\players\\{}\\player.db.bin", character);
-        let mut bin = Bin::new(master_dat.decompressed_file(&filename).unwrap(), console).unwrap();
+        let decompressed_file = master_dat.decompressed_file(&filename).unwrap();
+        let mut bin = Bin::new(decompressed_file, console).unwrap();
 
         // Collect every Game::AttackMoveType object in the player.db.bin file,
         // along with the attack's offset within the file
@@ -122,7 +136,8 @@ fn insert_new_attacks(master_dat: &mut MasterDat, console: Console, attacks: &Ha
         // Write the updated .bin file to the MASTER.DAT
         if let Err(i) = master_dat.update_file(&filename, bin.raw()) {
             panic!(
-                "updated file had wrong size: {} instead of {}",
+                "updated file '{}' had wrong size: {} instead of {}",
+                filename,
                 bin.raw().len(),
                 i
             );

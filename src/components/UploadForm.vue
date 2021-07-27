@@ -297,7 +297,7 @@ export default defineComponent({
                 // The previous attacks JSON file is optional, so there might
                 // not be any, only read if out if there is one.
                 const previousJson: Promise<ShrekSuperSlamCharacterAttackCollection | null> = previousJsonFilereader.files.length > 0 ?
-                  previousJsonFilereader.files[0].text().then(text => { console.log(text); return JSON.parse(text) as ShrekSuperSlamCharacterAttackCollection; }) :
+                  previousJsonFilereader.files[0].text().then(text => JSON.parse(text) as ShrekSuperSlamCharacterAttackCollection) :
                   Promise.resolve(null);
 
                 // With all the files read (or they will be once the associated
