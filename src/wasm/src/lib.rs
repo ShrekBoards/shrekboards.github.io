@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use js_sys::{Array, Uint8Array};
 use shrek_superslam::{Console, MasterDat, MasterDir};
-use shrek_superslam::classes::attacks::AttackMoveType;
+use shrek_superslam::classes::AttackMoveType;
 use shrek_superslam::files::Bin;
 use wasm_bindgen::prelude::*;
 
