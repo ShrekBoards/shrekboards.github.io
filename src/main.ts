@@ -13,8 +13,10 @@ import("@/wasm/pkg/index").then(s3wasm => {
             masterDir: ref(new Uint8Array()),
             console: ref(0),
             attacks: ref({}),
+            stages: ref({}),
             advancedModeEnabled: ref(false),
             wasmExtractCharacterAttacks: s3wasm.extract_character_attacks,
+            wasmExtractStages: s3wasm.extract_game_stages,
             wasmRecreateGameFiles: s3wasm.recreate_game_files,
         },
     }).use(router).mount("#app");

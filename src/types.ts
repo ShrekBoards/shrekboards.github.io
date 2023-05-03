@@ -32,3 +32,7 @@ interface ShrekSuperSlamCharacterAttack {
 export interface ShrekSuperSlamCharacterAttackCollection {
     readonly [character: string]: ShrekSuperSlamCharacterAttack[];
 }
+
+export interface ShrekSuperSlamStageCollection {
+    readonly [character: string]: Object[];
+}

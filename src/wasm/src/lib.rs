@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 
 use js_sys::{Array, Uint8Array};
+use serde::Serialize;
 use shrek_superslam::{Console, MasterDat, MasterDir};
-use shrek_superslam::classes::AttackMoveType;
+use shrek_superslam::classes::{AttackMoveType, GameWorld, SerialisedShrekSuperSlamGameObject};
 use shrek_superslam::files::Bin;
 use wasm_bindgen::prelude::*;
 
@@ -17,6 +18,19 @@ pub fn extract_character_attacks(master_dat_bytes: &[u8], master_dir_bytes: &[u8
     let master_dir = MasterDir::from_bytes(master_dir_bytes, console).unwrap();
     let master_dat = MasterDat::from_bytes(master_dat_bytes, master_dir);
     JsValue::from_serde(&parse_attacks(&master_dat, console)).unwrap()
+}
+
+/// Extract the game stages from the passed MASTER.DAT and MASTER.DIR
+/// files from a game on the given `console`, and return the stages as a
+/// JSON object.
+#[wasm_bindgen]
+pub fn extract_game_stages(master_dat_bytes: &[u8], master_dir_bytes: &[u8], console_num: i32) -> JsValue {
+    console_error_panic_hook::set_once();
+
+    let console = console_from_value(console_num);
+    let master_dir = MasterDir::from_bytes(master_dir_bytes, console).unwrap();
+    let master_dat = MasterDat::from_bytes(master_dat_bytes, master_dir);
+    JsValue::from_serde(&parse_stages(&master_dat, console)).unwrap()
 }
 
 /// Given the character `attacks` as a JSON object, overwrite the character
@@ -52,9 +66,22 @@ fn console_from_value(console: i32) -> Console {
 /// present in the passed MASTER.DAT file for the given `console`, and return
 /// them as a dictionary mapping.
 fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, Vec<AttackMoveType>> {
-    let mut attacks = HashMap::<String, Vec<AttackMoveType>>::new();
+    parse_objects::<AttackMoveType>(master_dat, console, "player.db.bin")
+}
 
-    // Enumerate all files in the MASTER.DAT to find the player.db.bin files
+/// Get all character Game::GameWorld objects from the player objects
+/// present in the passed MASTER.DAT file for the given `console`, and return
+/// them as a dictionary mapping.
+fn parse_stages(master_dat: &MasterDat, console: Console) -> HashMap::<String, Vec<GameWorld>> {
+    parse_objects::<GameWorld>(master_dat, console, "level.db.bin")
+}
+
+fn parse_objects<T>(master_dat: &MasterDat, console: Console, expected_filename: &'static str) -> HashMap::<String, Vec<T>>
+    where T: SerialisedShrekSuperSlamGameObject + Serialize
+{
+    let mut objects: HashMap<String, Vec<T>> = HashMap::new();
+
+    // Enumerate all files in the MASTER.DAT to find the requested files
     for filepath in master_dat.files() {
         // Due to an old bug in the Rust library repackage code, some repackaged
         // versions use forward slashes rather than backslashes, so try and
@@ -68,24 +95,24 @@ fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, 
         };
         let filename = iter.next().unwrap();
 
-        if filename == "player.db.bin" {
-            // Get the character name from the directory containing the file
-            let character = iter.next().unwrap();
+        if filename == expected_filename {
+            // Get the character or level name from the directory containing the file
+            let name = iter.next().unwrap();
 
-            // Read the player.db.bin file, grab all the Game::AttackMoveType
-            // objects and convert them to JSON objects
+            // Read the found file, grab all the objects of the requested type
+            // and convert them to JSON objects
             let bin = Bin::new(master_dat.decompressed_file(&filepath).unwrap(), console).unwrap();
-            let objects = bin
-                .get_all_objects_of_type::<AttackMoveType>()
+            let extracted_objects = bin
+                .get_all_objects_of_type::<T>()
                 .into_iter()
                 .map(|(_, a)| a)
                 .collect();
  
-            attacks.insert(character.to_owned(), objects);
+            objects.insert(name.to_owned(), extracted_objects);
         }
     }
 
-    attacks
+    objects
 }
 
 /// Insert the given `attacks` into the given MASTER.DAT file for the given `console`.

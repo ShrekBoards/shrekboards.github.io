@@ -3,49 +3,62 @@
         <Navbar/>
         <div class="row">
           <div class="col s3">
-            <Sidebar :x="attacks" :selected="selectedCharacter"/>
+            <Sidebar v-if="gametype == 'characters'" :x="characters" :gametype="gametype" :selected="selected"/>
+            <Sidebar v-else-if="gametype == 'stages'" :x="stages" :gametype="gametype" :selected="selected"/>
           </div>
           <div class="col s9">
-            <h4>{{ selectedCharacter }}</h4>
-            <Attack v-for="a in attacks[selectedCharacter]" :key="a" :attack="a"/>
+            <h4>{{ selected }}</h4>
+            <div v-if="gametype == 'characters'">
+              <Attack v-for="a in characters[selected]" :key="a" :attack="a"/>
+            </div>
+            <div v-else-if="gametype == 'stages'">
+              <Stage v-for="a in stages[selected]" :key="a" :stage="a"/>
+            </div>
           </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, Ref } from 'vue';
+import { defineComponent, inject, onUpdated, Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
-import Sidebar from '@/components/Sidebar.vue';
 import Attack from '@/components/Attack.vue';
 import Navbar from '@/components/Navbar.vue';
+import Sidebar from '@/components/Sidebar.vue';
+import Stage from '@/components/Stage.vue';
 
 export default defineComponent({
   name: 'edit-ui',
   components: {
-    Sidebar,
     Attack,
     Navbar,
+    Sidebar,
+    Stage,
   },
   props: {
-    // This comes from the URL
-    selectedCharacter: {
+    // These comes from the URL:
+    // /<characters|stages>/:selected
+    gametype: {
+      required: true,
+      type: String
+    },
+    selected: {
       required: true,
       type: String
     }
   },
-  setup() {
-      // If no character attacks JSON has been generated, redirect to the upload form
-      const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
-      if (Object.keys(attacksGlobal.value).length == 0) {
-          const router = useRouter();
-          router.replace({ name: "Upload" });
+  setup(props) {
+      const attacksGlobalRef = inject("attacks") as Ref<object>;
+      const stagesGlobalRef = inject("stages") as Ref<object>;
+
+      // If no JSON has been generated, redirect to the upload form
+      if (Object.keys(attacksGlobalRef.value).length == 0 ||
+          Object.keys(stagesGlobalRef.value).length == 0) {
+        const router = useRouter();
+        router.replace({ name: "Upload" });
       }
 
-      // Get the character attacks
-      const attacks = inject("attacks") as ShrekSuperSlamCharacterAttackCollection;
-      return { attacks };
+      return { characters: attacksGlobalRef.value, stages: stagesGlobalRef.value };
   }
 });
 </script>

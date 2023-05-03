@@ -137,7 +137,7 @@
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { ShrekSuperSlamCharacterAttackCollection } from "../types"
+import { ShrekSuperSlamCharacterAttackCollection, ShrekSuperSlamStageCollection } from "../types"
 import M from 'materialize-css';
 
 export default defineComponent({
@@ -147,11 +147,19 @@ export default defineComponent({
             masterDat: Uint8Array,
             masterDir: Uint8Array,
             console: number) => ShrekSuperSlamCharacterAttackCollection;
+
+        type WasmExtractStagesFunction = (
+          masterDat: Uint8Array,
+          masterDir: Uint8Array,
+          console: number) => ShrekSuperSlamStageCollection;
+          
         const wasmExtractCharacterAttacks = inject("wasmExtractCharacterAttacks") as WasmExtractCharacterAttacksFunction;
+        const wasmExtractStages = inject("wasmExtractStages") as WasmExtractStagesFunction;
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
         const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
+        const stagesGlobal = inject("stages") as Ref<ShrekSuperSlamStageCollection>;
         const advancedModeEnabledGlobal = inject("advancedModeEnabled") as Ref<boolean>;
         const router = useRouter();
 
@@ -183,6 +191,7 @@ export default defineComponent({
           masterDirGlobal.value = new Uint8Array();
           consoleGlobal.value = 0;
           attacksGlobal.value = {};
+          stagesGlobal.value = {};
         }
 
         /**
@@ -231,8 +240,8 @@ export default defineComponent({
             consoleGlobal.value = gameconsole;
             advancedModeEnabledGlobal.value = advancedModeEnabled;
 
-            // Read the attacks from the MASTER.DAT and DIR pair using the wasm
-            // function.
+            // Read the attacks and stages from the MASTER.DAT and DIR pair
+            // using the wasm functions.
             const masterDatAttacks = wasmExtractCharacterAttacks(
                 masterDat,
                 masterDir,
@@ -243,6 +252,13 @@ export default defineComponent({
             // use the JSON generated from parsing the file.
             const attacks = previous !== null ? previous : masterDatAttacks;
             attacksGlobal.value = attacks;
+
+            // Set the stages to the parsed values. 
+            stagesGlobal.value = wasmExtractStages(
+                masterDat,
+                masterDir,
+                gameconsole
+            );
             
             // Get the first character alphabetically to navigate to
             const characterNames = Object.keys(attacks);
@@ -251,8 +267,8 @@ export default defineComponent({
             if (characterNames.length > 0) {
               // Navigate to the main UI
               router.push({
-                  name: "UI",
-                  params: { selectedCharacter: characterNames[0] }
+                  name: "CharacterUi",
+                  params: { selected: characterNames[0] }
               });
             } else {
               error();

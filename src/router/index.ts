@@ -11,10 +11,16 @@ import UI from '../views/Ui.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/characters/:selectedCharacter',
-    name: 'UI',
+    path: '/characters/:selected',
+    name: 'CharacterUi',
     component: UI,
-    props: true,
+    props: route => ({ gametype: 'characters', selected: route.params.selected }),
+  },
+  {
+    path: '/stages/:selected',
+    name: 'StageUi',
+    component: UI,
+    props: route => ({ gametype: 'stages', selected: route.params.selected }),
   },
   {
     path: '/about',

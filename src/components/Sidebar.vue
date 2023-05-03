@@ -1,20 +1,21 @@
 <template>
     <div class="sidebar sidenav-fixed">
+        <SelectionTabs :gametype="gametype"/>
         <ul>
-            <router-link v-for="character in characters" :key="character" :to="`/characters/${character}`">
-                <div v-if="selected == character" class="active">
+            <router-link v-for="item in items" :key="item" :to="`/${gametype}/${item}`">
+                <div v-if="selected == item" class="active">
                     <li>
                         <div class="valign-wrapper">
-                            <img :src="`/images/icons/${character}.png`"/>
-                            {{ character }}
+                            <img :src="`/images/icons/${item}.png`"/>
+                            {{ item }}
                         </div>
                     </li>
                 </div>
                 <div v-else class="inactive">
                     <li>
                         <div class="valign-wrapper">
-                            <img :src="`/images/icons/${character}.png`"/>
-                            {{ character }}
+                            <img :src="`/images/icons/${item}.png`"/>
+                            {{ item }}
                         </div>
                     </li>
                 </div>
@@ -24,15 +25,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
-import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
+import { defineComponent, ref } from 'vue';
+import SelectionTabs from '@/components/SelectionTabs.vue';
 
 export default defineComponent({
   name: 'sidebar-component',
+  components: {
+    SelectionTabs,
+  },
   props: {
     x: {
         required: true,
-        type: Object as PropType<ShrekSuperSlamCharacterAttackCollection>,
+        type: Object,
+    },
+    gametype: {
+        required: true,
+        type: String,
     },
     selected: {
         required: true,
@@ -40,8 +48,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-      const characters = ref(Object.keys(props.x).sort());
-      return { characters };
+      const items = ref(Object.keys(props.x).sort());
+      return { items };
   }
 });
 </script>
