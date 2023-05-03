@@ -5,6 +5,9 @@ module.exports = {
     productionSourceMap: false,
     runtimeCompiler: true,
     configureWebpack: {
+        experiments: {
+            syncWebAssembly: true
+        },
         plugins: [
             new WasmPackPlugin({
                 crateDirectory: path.resolve(__dirname, "./src/wasm"),
@@ -15,7 +18,7 @@ module.exports = {
             rules: [
                 {
                     test: /\.wasm$/,
-                    type: "webassembly/experimental",
+                    type: "webassembly/sync",
                 },
             ],
         },

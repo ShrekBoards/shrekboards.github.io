@@ -17,7 +17,7 @@ import UploadForm from '@/components/UploadForm.vue'
 import Navbar from '@/components/Navbar.vue'
 
 export default defineComponent({
-  name: 'Upload',
+  name: 'upload-form-page',
   components: {
     Navbar,
     UploadForm,

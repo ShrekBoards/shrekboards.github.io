@@ -28,7 +28,7 @@ import { defineComponent, PropType, ref } from 'vue';
 import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 
 export default defineComponent({
-  name: 'Sidebar',
+  name: 'sidebar-component',
   props: {
     x: {
         required: true,

@@ -21,7 +21,7 @@ import M from 'materialize-css';
 import { ShrekSuperSlamCharacterAttackCollection } from "../types"
 
 export default defineComponent({
-    name: "ResetButton",
+    name: "reset-button",
     setup() {
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;

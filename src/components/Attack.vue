@@ -77,7 +77,7 @@ import { defineComponent, inject, Ref, reactive } from 'vue';
 import M from 'materialize-css';
 
 export default defineComponent({
-  name: 'Attack',
+  name: 'attack-form',
   props: {
     attack: { type: Object, required: true }
   },

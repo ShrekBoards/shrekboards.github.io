@@ -30,7 +30,7 @@ import DownloadButton from '@/components/DownloadButton.vue';
 import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
-  name: 'Download',
+  name: 'download-page',
   components: {
       DownloadButton,
       Navbar,

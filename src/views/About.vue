@@ -38,7 +38,7 @@ import { defineComponent } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
-  name: 'About',
+  name: 'about-page',
   components: {
       Navbar,
   },

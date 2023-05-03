@@ -43,7 +43,7 @@ import M from 'materialize-css';
 import { ShrekSuperSlamCharacterAttackCollection } from "../types"
 
 export default defineComponent({
-  name: 'Navbar',
+  name: 'navbar-component',
   components: {
       ResetButton,
       SaveButton,

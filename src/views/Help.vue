@@ -20,7 +20,7 @@ import { defineComponent } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
-  name: 'Help',
+  name: 'help-page',
   components: {
       Navbar,
   },

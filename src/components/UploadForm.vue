@@ -141,9 +141,13 @@ import { ShrekSuperSlamCharacterAttackCollection } from "../types"
 import M from 'materialize-css';
 
 export default defineComponent({
-    name: 'UploadForm',
+    name: 'upload-form',
     setup() {
-        const wasmExtractCharacterAttacks = inject("wasmExtractCharacterAttacks") as Function;
+        type WasmExtractCharacterAttacksFunction = (
+            masterDat: Uint8Array,
+            masterDir: Uint8Array,
+            console: number) => ShrekSuperSlamCharacterAttackCollection;
+        const wasmExtractCharacterAttacks = inject("wasmExtractCharacterAttacks") as WasmExtractCharacterAttacksFunction;
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
@@ -233,7 +237,7 @@ export default defineComponent({
                 masterDat,
                 masterDir,
                 gameconsole
-            ) as ShrekSuperSlamCharacterAttackCollection;
+            );
 
             // If we have a previous attacks JSON file, use that, otherwise
             // use the JSON generated from parsing the file.

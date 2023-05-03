@@ -8,7 +8,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: "DownloadButtonBinary",
+    name: "download-button-binary",
     props: {
         filename: {
             required: true,
@@ -39,10 +39,12 @@ export default defineComponent({
                 props.json !== undefined ?
                     new Blob([props.json], {type: "application/json"}) :
                     null;
-            const link = document.createElement("a");
-            link.href = window.URL.createObjectURL(blob);
-            link.download = props.filename;
-            link.click();
+            if (blob !== null) {
+                const link = document.createElement("a");
+                link.href = window.URL.createObjectURL(blob);
+                link.download = props.filename;
+                link.click();
+            }
         }
 
         const name = props.displayname !== undefined ? props.displayname : props.filename;

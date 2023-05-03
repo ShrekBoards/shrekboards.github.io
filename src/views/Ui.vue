@@ -22,7 +22,7 @@ import Attack from '@/components/Attack.vue';
 import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
-  name: 'UI',
+  name: 'edit-ui',
   components: {
     Sidebar,
     Attack,

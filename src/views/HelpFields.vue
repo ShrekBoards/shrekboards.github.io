@@ -85,7 +85,7 @@ import { defineComponent } from 'vue';
 import Navbar from '@/components/Navbar.vue';
 
 export default defineComponent({
-  name: 'Fields',
+  name: 'fields-help-page',
   components: {
       Navbar,
   },

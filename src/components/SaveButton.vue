@@ -25,9 +25,14 @@ import M from 'materialize-css';
 import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
 
 export default defineComponent({
-    name: "SaveButton",
+    name: "save-button",
     setup() {
-        const wasmRecreateGameFiles = inject("wasmRecreateGameFiles") as Function;
+        type WasmRecreateGameFilesFunction = (
+            masterDat: Uint8Array,
+            masterDir: Uint8Array,
+            console: number,
+            attacks: ShrekSuperSlamCharacterAttackCollection) => Uint8Array[];
+        const wasmRecreateGameFiles = inject("wasmRecreateGameFiles") as WasmRecreateGameFilesFunction;
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
@@ -59,8 +64,8 @@ export default defineComponent({
                     attacksGlobal.value
                 );
 
-                masterDatGlobal.value = (newFiles[0] as Uint8Array);
-                masterDirGlobal.value = (newFiles[1] as Uint8Array);
+                masterDatGlobal.value = newFiles[0];
+                masterDirGlobal.value = newFiles[1];
 
                 router.push("/download");
             } catch (e) {
