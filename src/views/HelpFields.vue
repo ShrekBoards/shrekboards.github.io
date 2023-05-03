@@ -30,6 +30,11 @@
             up, the larger the fast, negative goes down, the smaller the faster.
           </li>
           <li>
+            The <b>invincibility</b> field is the amount of time, in seconds, that the character is invincible after
+            performing the attack. The invincibility is cancelled early if the player performs another attack. This is
+            often used in conjunction with the endlag field on SLAM attacks.
+          </li>
+          <li>
             The <b>stun</b> is the amount of time, in seconds, that the attacks stuns the opponent for. Stun in this
             context refers to the state where a character is unable to act, and has stars circling their heads.
           </li>
