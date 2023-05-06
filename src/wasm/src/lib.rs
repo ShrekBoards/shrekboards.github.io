@@ -76,6 +76,8 @@ fn parse_stages(master_dat: &MasterDat, console: Console) -> HashMap::<String, V
     parse_objects::<GameWorld>(master_dat, console, "level.db.bin")
 }
 
+/// Generic method to grab all copies of a specified game type from all
+/// files with a given name in the MASTER.DAT for the given console.
 fn parse_objects<T>(master_dat: &MasterDat, console: Console, expected_filename: &'static str) -> HashMap::<String, Vec<T>>
     where T: SerialisedShrekSuperSlamGameObject + Serialize
 {
