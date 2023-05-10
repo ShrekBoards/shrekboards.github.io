@@ -20,10 +20,12 @@
                   </div>
                 </li>
                 <li v-for="field in Object.keys(a).filter(k => typeof a[k] == 'boolean')" :key="field">
-                  <label>
-                    <input v-model="a[field]" class="filled-in" type="checkbox"/>
-                    <span>{{ field }}</span>
-                  </label>
+                  <div v-if="!field.startsWith('unknown') || (field.startsWith('unknown') && advancedModeEnabled)">
+                    <label>
+                      <input v-model="a[field]" class="filled-in" type="checkbox"/>
+                      <span>{{ field }}</span>
+                    </label>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -39,9 +41,11 @@
               <div v-for="hitbox in a['hitboxes']" :key="hitbox" class="hitbox card darken-1">
                 <ul>
                   <li v-for="field in Object.keys(hitbox)" :key="field">
-                    {{ field }}
-                    <div class="input-field inline">
-                      <input v-model.number="hitbox[field]"/>
+                    <div v-if="!field.startsWith('unknown') || (field.startsWith('unknown') && advancedModeEnabled)">
+                      {{ field }}
+                      <div class="input-field inline">
+                        <input v-model.number="hitbox[field]"/>
+                      </div>
                     </div>
                   </li>
                 </ul>
@@ -59,9 +63,11 @@
               <div class="projectile">
                 <ul>
                   <li v-for="field in Object.keys(a['projectile'])" :key="field">
-                    {{ field }}
-                    <div class="input-field inline">
-                      <input v-model.number="a['projectile'][field]"/>
+                    <div v-if="!field.startsWith('unknown') || (field.startsWith('unknown') && advancedModeEnabled)">
+                      {{ field }}
+                      <div class="input-field inline">
+                        <input v-model.number="a['projectile'][field]"/>
+                      </div>
                     </div>
                   </li>
                 </ul>
