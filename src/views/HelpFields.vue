@@ -6,13 +6,22 @@
         <h2>Fields</h2>
         <p>This section details what the different fields within the app do within the game.</p>
         <p>Some of this is speculation and guesswork! Please report if things do not work as written.</p>
-        <h5>Attack Names</h5>
+        <h4>Attack Names</h4>
         <ul class="list">
           <li>A <b>special</b> attack is the character's SLAM attack.</li>
           <li>The rest of the attacks should be self-explanatory from the name.</li>
         </ul>
-        <h5>Attack Fields</h5>
+        <h4>Attack Fields</h4>
+        <h5>Numeric fields</h5>
         <ul class="list">
+          <li>
+            The <b>aim_range</b> is the distance at which the attack homes in on the opponent.
+          </li>
+          <li>
+            The <b>charge</b> field is how long it takes (in seconds) for a charge
+            attack to fully charge. The <b>charge_effect</b> is how long it takes
+            (also in seconds) for the charging animation, the orange flash, to complete.
+          </li>
           <li>
             <b>damage1</b> is the damage dealt by the attack. The SLAM bar fills at 100 damage. Can be negative, which
             causes the SLAM bar to decrease when the move connects.
@@ -35,9 +44,20 @@
             often used in conjunction with the endlag field on SLAM attacks.
           </li>
           <li>
+            The <b>knockback</b> field is how far the attack landing pushes an opponent away. Positive numbers push
+            an opponent away, negative numbers pull toward.
+          </li>
+          <li>
+            The <b>multi_hit_speed</b> is how many times a second a multi-hit move hits. If set to zero, the move will
+            be a single-hit move.
+          </li>
+          <li>
             The <b>stun</b> is the amount of time, in seconds, that the attacks stuns the opponent for. Stun in this
             context refers to the state where a character is unable to act, and has stars circling their heads.
           </li>
+        </ul>
+        <h5>Tickbox fields</h5>
+        <ul class="list">
           <li>
             If a move is <b>disabled</b>, then inputting it causes nothing to happen.
           </li>
@@ -45,10 +65,26 @@
             A move that <b>hits_otg</b> hits characters in the blue knocked-down state.
           </li>
           <li>
+            If a move is <b>intangible</b>, it doesn't seem to do anything? This one needs more research.
+          </li>
+          <li>
+            If <b>is_slam</b> is checked, the move will SLAM an opponent if it connects and the user's SLAM bar is full.
+          </li>
+          <li>
             If the <b>knocks_down</b> flag is set, the the move connecting puts the opponent in the blue knocked-down state.
           </li>
+          <li>
+            If <b>lock_position</b> is set, the direction the user is facing will be locked in place during the move.
+          </li>
+          <li>
+            When <b>no_opponent_contact</b> is checked, the move will not make contact with opponents. It will still make
+            contact with walls and throwables.
+          </li>
+          <li>
+            If <b>shield_breaks</b> is checked, then the move will break shields on contact.
+          </li>
         </ul>
-        <h5>Hitbox Fields</h5>
+        <h4>Hitbox Fields</h4>
         <ul class="list">
           <li>
             The <b>delay</b> is the amount of time in seconds it takes for the hitbox to become active from when the attack
@@ -63,7 +99,7 @@
             the game crashes.
           </li>
         </ul>
-        <h5>Projectile Fields</h5>
+        <h4>Projectile Fields</h4>
         <p>
           The projectile fields are generally not very well understood and these could be incorrect. Things such as the damage
           dealt by the projectile are controlled by its encompassing attack.
