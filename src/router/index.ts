@@ -60,11 +60,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/help/pc',
     name: 'PC',
     component: PC
-  },
-  {
-    path: '/help/options',
-    name: 'Options',
-    component: Options
   }
 ]
 

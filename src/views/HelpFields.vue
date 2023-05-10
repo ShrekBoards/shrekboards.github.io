@@ -80,6 +80,26 @@
             in on an opponent.
           </li>
         </ul>
+        <h4>Unknown Fields</h4>
+        <p>
+          The attack objects are a collection of about 300 bytes, comprising of
+          many fields, mostly in the form of decimal numbers. Which numbers
+          correspond to what property of the attack is typically worked out
+          through trial-and-error, by tweaking the values and seeing what
+          happens.
+        </p>
+        <p>
+          As a result, many of these fields have had their location identified,
+          but not their purpose. If you would like to access these unknown fields
+          to play around with them, tick <b>Show unknown fields</b> in the upload.
+          You can then modify these values, and work out what they do for yourself.
+          If you manage to deduce what a field does, please open an
+          <a href="https://github.com/ShrekBoards/shrek-superslam/issues">issue</a>
+          on the main library explaining what the field does, or message kirby.
+        </p>
+        <p>
+          Hopefully this will allow new fields to be discovered much sooner!
+        </p>
       </div>
     </div>
   </div>

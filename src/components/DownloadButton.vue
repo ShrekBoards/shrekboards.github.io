@@ -22,10 +22,6 @@ export default defineComponent({
             required: false,
             type: Uint8Array,
         },
-        json: {
-            required: false,
-            type: String,
-        },
     },
     setup(props) {
         /**
@@ -36,9 +32,7 @@ export default defineComponent({
         function buttonclick() {
             const blob = props.data !== undefined ?
                 new Blob([props.data], {type: "application/octet-stream"}) :
-                props.json !== undefined ?
-                    new Blob([props.json], {type: "application/json"}) :
-                    null;
+                null;
             if (blob !== null) {
                 const link = document.createElement("a");
                 link.href = window.URL.createObjectURL(blob);

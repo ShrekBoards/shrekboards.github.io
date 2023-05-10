@@ -46,38 +46,11 @@
           </label>
         </p>
 
-        <!-- Additional options dropdown -->
-        <div class="options">
-          <ul class="collapsible">
-            <li>
-              <div class="collapsible-header">
-                <i class="material-icons iconadd">keyboard_arrow_right</i>
-                <i class="material-icons iconremove">keyboard_arrow_down</i>
-                Options
-              </div>
-              <div class="collapsible-body">
-                For more information on these options, see the <router-link to="/help/options">Options</router-link> help.
-
-                <!-- Previous JSON file upload -->
-                <div class="file-field input-field">
-                  <div class="btn">
-                    <span>attack.json</span>
-                    <input type="file" id="previous" name="files[]" />
-                  </div>
-                  <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                  </div>
-                </div>
-
-                <!-- Advanced mode toggle -->
-                <label>
-                  <input id="advanced" class="filled-in" type="checkbox"/>
-                  <span>Advanced Mode</span>
-                </label>
-              </div>
-            </li>
-          </ul>
-        </div>
+        <!-- Advanced mode toggle -->
+        <label>
+          <input id="advanced" class="filled-in" type="checkbox"/>
+          <span>Show unknown fields</span>
+        </label>
 
         <!-- Rainbow preload spinner -->
         <div id="upload-preloader" class="preloader-wrapper big loader">
@@ -223,14 +196,12 @@ export default defineComponent({
          *   masterDat: The loaded bytes of the MASTER.DAT file.
          *   masterDir: The loaded bytes of the MASTER.DIR file.
          *   gameconsole: An integer between 1 and 4 representing the selected console version.
-         *   previous: The previously generated JSON to use, if any.
          *   advancedModeEnabled: True to enable advanced mode (shows unknown fields), false to not.
          */
         function fileLoadCompleteCall(
           masterDat: Uint8Array,
           masterDir: Uint8Array,
           gameconsole: number,
-          previous: ShrekSuperSlamCharacterAttackCollection | null,
           advancedModeEnabled: boolean,
         ) {
           try {
@@ -242,18 +213,12 @@ export default defineComponent({
 
             // Read the attacks and stages from the MASTER.DAT and DIR pair
             // using the wasm functions.
-            const masterDatAttacks = wasmExtractCharacterAttacks(
+            attacksGlobal.value = wasmExtractCharacterAttacks(
                 masterDat,
                 masterDir,
                 gameconsole
             );
 
-            // If we have a previous attacks JSON file, use that, otherwise
-            // use the JSON generated from parsing the file.
-            const attacks = previous !== null ? previous : masterDatAttacks;
-            attacksGlobal.value = attacks;
-
-            // Set the stages to the parsed values. 
             stagesGlobal.value = wasmExtractStages(
                 masterDat,
                 masterDir,
@@ -261,7 +226,7 @@ export default defineComponent({
             );
             
             // Get the first character alphabetically to navigate to
-            const characterNames = Object.keys(attacks);
+            const characterNames = Object.keys(attacksGlobal.value);
             characterNames.sort();
 
             if (characterNames.length > 0) {
@@ -306,24 +271,17 @@ export default defineComponent({
             // Load the files out of the form
             const masterDirFilereader = document.getElementById("masterdir") as HTMLInputElement;
             const masterDatFilereader = document.getElementById("masterdat") as HTMLInputElement;
-            const previousJsonFilereader = document.getElementById("previous") as HTMLInputElement;
-            if (masterDirFilereader !== null && masterDatFilereader !== null && previousJsonFilereader !== null &&
-                  masterDirFilereader.files !== null && masterDatFilereader.files !== null && previousJsonFilereader.files !== null) {
+            if (masterDirFilereader !== null && masterDatFilereader !== null &&
+                  masterDirFilereader.files !== null && masterDatFilereader.files !== null) {
 
                 // The MASTER.DAT and MASTER.DIR are mandatory, read them out.
                 const masterDir = masterDirFilereader.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
                 const masterDat = masterDatFilereader.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
 
-                // The previous attacks JSON file is optional, so there might
-                // not be any, only read if out if there is one.
-                const previousJson: Promise<ShrekSuperSlamCharacterAttackCollection | null> = previousJsonFilereader.files.length > 0 ?
-                  previousJsonFilereader.files[0].text().then(text => JSON.parse(text) as ShrekSuperSlamCharacterAttackCollection) :
-                  Promise.resolve(null);
-
                 // With all the files read (or they will be once the associated
                 // promise resolves), do the final bit of processing.
-                Promise.all([masterDir, masterDat, previousJson])
-                  .then((values) => fileLoadCompleteCall(values[1], values[0], gameconsole, values[2], advancedModeEnabled));
+                Promise.all([masterDir, masterDat])
+                  .then((values) => fileLoadCompleteCall(values[1], values[0], gameconsole, advancedModeEnabled));
             }
         }
 
