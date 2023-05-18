@@ -5,7 +5,7 @@
             <div class="collapsible-header">
               <i class="material-icons iconadd">keyboard_arrow_right</i>
               <i class="material-icons iconremove">keyboard_arrow_down</i>
-              {{ a.name }}
+              {{ name }}
             </div>
             <div class="collapsible-body">
               <ul>
@@ -39,6 +39,7 @@ import M from 'materialize-css';
 export default defineComponent({
   name: 'stage-form',
   props: {
+    name: { type: String, required: true },
     stage: { type: Object, required: true }
   },
   setup(props) {

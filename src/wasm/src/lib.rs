@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use js_sys::{Array, Uint8Array};
 use serde::Serialize;
 use shrek_superslam::{Console, MasterDat, MasterDir};
-use shrek_superslam::classes::{AttackMoveType, GameWorld, SerialisedShrekSuperSlamGameObject};
+use shrek_superslam::classes::{AttackMoveType, GameWorld, GfDb, SerialisedShrekSuperSlamGameObject};
 use shrek_superslam::files::Bin;
 use wasm_bindgen::prelude::*;
 
@@ -46,7 +46,7 @@ pub fn recreate_game_files(master_dat_bytes: &[u8], master_dir_bytes: &[u8], con
     let console = console_from_value(console_num);
     let master_dir = MasterDir::from_bytes(master_dir_bytes, console).unwrap();
     let mut master_dat = MasterDat::from_bytes(master_dat_bytes, master_dir);
-    let attacks: HashMap<String, Vec<AttackMoveType>> = character_attacks.into_serde().unwrap();
+    let attacks: HashMap<String, HashMap<String, AttackMoveType>> = character_attacks.into_serde().unwrap();
     let (new_master_dat_bytes, new_master_dir_bytes) = insert_new_attacks(&mut master_dat, console, &attacks);
     vec!(new_master_dat_bytes, new_master_dir_bytes).iter().map(|x| Uint8Array::from(x.as_slice())).collect()
 }
@@ -65,23 +65,23 @@ fn console_from_value(console: i32) -> Console {
 /// Get all character Game::AttackMoveType objects from the player objects
 /// present in the passed MASTER.DAT file for the given `console`, and return
 /// them as a dictionary mapping.
-fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, Vec<AttackMoveType>> {
+fn parse_attacks(master_dat: &MasterDat, console: Console) -> HashMap::<String, HashMap<String, AttackMoveType>> {
     parse_objects::<AttackMoveType>(master_dat, console, "player.db.bin")
 }
 
 /// Get all character Game::GameWorld objects from the player objects
 /// present in the passed MASTER.DAT file for the given `console`, and return
 /// them as a dictionary mapping.
-fn parse_stages(master_dat: &MasterDat, console: Console) -> HashMap::<String, Vec<GameWorld>> {
+fn parse_stages(master_dat: &MasterDat, console: Console) -> HashMap::<String, HashMap<String, GameWorld>> {
     parse_objects::<GameWorld>(master_dat, console, "level.db.bin")
 }
 
 /// Generic method to grab all copies of a specified game type from all
 /// files with a given name in the MASTER.DAT for the given console.
-fn parse_objects<T>(master_dat: &MasterDat, console: Console, expected_filename: &'static str) -> HashMap::<String, Vec<T>>
+fn parse_objects<T>(master_dat: &MasterDat, console: Console, expected_filename: &'static str) -> HashMap::<String, HashMap<String, T>>
     where T: SerialisedShrekSuperSlamGameObject + Serialize
 {
-    let mut objects: HashMap<String, Vec<T>> = HashMap::new();
+    let mut objects: HashMap<String, HashMap<String, T>> = HashMap::new();
 
     // Enumerate all files in the MASTER.DAT to find the requested files
     for filepath in master_dat.files() {
@@ -101,16 +101,18 @@ fn parse_objects<T>(master_dat: &MasterDat, console: Console, expected_filename:
             // Get the character or level name from the directory containing the file
             let name = iter.next().unwrap();
 
-            // Read the found file, grab all the objects of the requested type
-            // and convert them to JSON objects
+            // Read the found file, extract the gf::DB index object
             let bin = Bin::new(master_dat.decompressed_file(&filepath).unwrap(), console).unwrap();
-            let extracted_objects = bin
-                .get_all_objects_of_type::<T>()
+            let db = bin.get_object_from_offset::<GfDb>(0x00).unwrap();
+
+            // Resolve all objects of the requested type, and correlate them with
+            // their DB name
+            let resolved_objects_in_file: HashMap<String, T> = db.entries
                 .into_iter()
-                .map(|(_, a)| a)
+                .filter_map(|(db_entry_name, obj)| if obj.hash == T::hash() { Some((db_entry_name, bin.get_object_from_offset::<T>(obj.offset).unwrap())) } else { None })
                 .collect();
  
-            objects.insert(name.to_owned(), extracted_objects);
+            objects.insert(name.to_owned(), resolved_objects_in_file);
         }
     }
 
@@ -118,8 +120,8 @@ fn parse_objects<T>(master_dat: &MasterDat, console: Console, expected_filename:
 }
 
 /// Insert the given `attacks` into the given MASTER.DAT file for the given `console`.
-fn insert_new_attacks(master_dat: &mut MasterDat, console: Console, attacks: &HashMap<String, Vec<AttackMoveType>>) -> (Vec<u8>, Vec<u8>) {
-    for (character, attacks) in attacks {
+fn insert_new_attacks(master_dat: &mut MasterDat, console: Console, characters: &HashMap<String, HashMap<String, AttackMoveType>>) -> (Vec<u8>, Vec<u8>) {
+    for (character, attacks) in characters {
         // Determine the correct filename. Due to a bug in older versions of
         // the repackaging code in the shrek-superslam crate, the filename
         // may use forward slashes. We use compressed_file to check for the
@@ -138,27 +140,18 @@ fn insert_new_attacks(master_dat: &mut MasterDat, console: Console, attacks: &Ha
         let decompressed_file = master_dat.decompressed_file(&filename).unwrap();
         let mut bin = Bin::new(decompressed_file, console).unwrap();
 
-        // Collect every Game::AttackMoveType object in the player.db.bin file,
-        // along with the attack's offset within the file
-        let original_attacks = bin.get_all_objects_of_type::<AttackMoveType>();
+        // Read the index gf::DB object in this .bin file.
+        let db = bin.get_object_from_offset::<GfDb>(0x00).unwrap();
 
-        // Take each attack in the .bin file and replace it with its equivalent
-        // in the JSON file. This assumes that the attacks are in the exact same
-        // order in both lists, and panics if this is not the case. We cannot do
-        // a name lookup here, because one list may have multiple attacks with the
-        // same name.
-        for (replacement_attack, (offset, attack)) in attacks.iter().zip(original_attacks) {
-            // Sanity check the names match
-            if replacement_attack.name != attack.name {
-                panic!("names '{}' and '{}' do not match!", replacement_attack.name, attack.name);
-            }
-
-            // Overwrite the attack in the .bin file with the one from the JSON.
-            if bin.overwrite_object(offset, replacement_attack).is_err() {
-                panic!(
-                    "error overwriting attack '{}' in '{}'",
-                    attack.name, filename
-                );
+        // Replace each object in the DB that we have a replacement for.
+        for (db_entry_name, obj) in &db.entries {
+            if let Some(replacement_attack) = attacks.get(db_entry_name) {
+                if bin.overwrite_object(obj.offset, replacement_attack).is_err() {
+                    panic!(
+                        "error overwriting attack '{}' in '{}'",
+                        db_entry_name, filename
+                    );
+                }
             }
         }
 

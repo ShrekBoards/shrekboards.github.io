@@ -9,10 +9,10 @@
           <div class="col s9">
             <h4>{{ selected }}</h4>
             <div v-if="gametype == 'characters'">
-              <Attack v-for="a in characters[selected]" :key="a" :attack="a"/>
+              <Attack v-for="attack_name in Object.keys(characters[selected]).sort()" :key="loopKeyName(attack_name)" :name="attack_name" :attack="characters[selected][attack_name]"/>
             </div>
             <div v-else-if="gametype == 'stages'">
-              <Stage v-for="a in stages[selected]" :key="a" :stage="a"/>
+              <Stage v-for="stage_property in Object.keys(stages[selected]).sort()" :key="loopKeyName(stage_property)" :name="stage_property" :stage="stages[selected][stage_property]"/>
             </div>
           </div>
         </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onUpdated, Ref } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Attack from '@/components/Attack.vue';
 import Navbar from '@/components/Navbar.vue';
@@ -47,7 +47,7 @@ export default defineComponent({
       type: String
     }
   },
-  setup(props) {
+  setup() {
       const attacksGlobalRef = inject("attacks") as Ref<object>;
       const stagesGlobalRef = inject("stages") as Ref<object>;
 
@@ -59,6 +59,11 @@ export default defineComponent({
       }
 
       return { characters: attacksGlobalRef.value, stages: stagesGlobalRef.value };
+  },
+  methods: {
+    loopKeyName(x: string) {
+      return this.$props.selected + "/" + x;
+    }
   }
 });
 </script>

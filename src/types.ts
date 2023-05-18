@@ -11,7 +11,7 @@ interface ShrekSuperSlamCharacterAttackHitbox {
     delay: number;
     width: number;
     radius: number;
-//    offset: number;
+    offset: number;
 }
 
 interface ShrekSuperSlamCharacterAttack {
@@ -26,13 +26,23 @@ interface ShrekSuperSlamCharacterAttack {
     intangible: boolean;
     knocks_down: boolean;
     readonly name: string;
-    //projectiles: ShrekSuperSlamCharacterAttackProjectile[];
+    projectiles: ShrekSuperSlamCharacterAttackProjectile[];
+}
+
+export interface NamedShrekSuperSlamCharacterAttack {
+    readonly [name: string]: ShrekSuperSlamCharacterAttack;
 }
 
 export interface ShrekSuperSlamCharacterAttackCollection {
-    readonly [character: string]: ShrekSuperSlamCharacterAttack[];
+    readonly [character: string]: NamedShrekSuperSlamCharacterAttack;
+}
+
+interface ShrekSuperSlamStageProperty {}
+
+export interface NamedShrekSuperSlamStageProperty {
+    readonly [name: string]: ShrekSuperSlamStageProperty;
 }
 
 export interface ShrekSuperSlamStageCollection {
-    readonly [character: string]: Object[];
+    readonly [stage: string]: NamedShrekSuperSlamStageProperty;
 }
