@@ -11,7 +11,7 @@
               <ul>
                 <!-- Create a form entry for every field in the stage. We start with the text box entries. -->
                 <li v-for="field in Object.keys(a).filter(k => typeof a[k] != 'boolean')" :key="field">
-                  <div v-if="field !== 'name' &&
+                  <div v-if="field !== 'name' && field !== 'keyframes' &&
                       (!field.startsWith('unknown') || (field.startsWith('unknown') && advancedModeEnabled))">
                     {{ field }}
                     <div class="input-field inline">
@@ -20,12 +20,36 @@
                   </div>
                 </li>
                 <li v-for="field in Object.keys(a).filter(k => typeof a[k] == 'boolean')" :key="field">
-                  <label>
-                    <input v-model="a[field]" class="filled-in" type="checkbox"/>
-                    <span>{{ field }}</span>
-                  </label>
+                  <div v-if="!field.startsWith('unknown') || (field.startsWith('unknown') && advancedModeEnabled)">
+                    <label>
+                      <input v-model="a[field]" class="filled-in" type="checkbox"/>
+                      <span>{{ field }}</span>
+                    </label>
+                  </div>
                 </li>
               </ul>
+            </div>
+          </li>
+          <!-- Keyframes -->
+          <li v-if="a['keyframes'] != null && a['keyframes'].length > 0">
+            <div class="collapsible-header" v-on:click="expand">
+              <i class="material-icons iconadd">keyboard_arrow_right</i>
+              <i class="material-icons iconremove">keyboard_arrow_down</i>
+              Keyframes
+            </div>
+            <div class="collapsible-body">
+              <div v-for="hitbox in a['keyframes']" :key="hitbox" class="hitbox card darken-1">
+                <ul>
+                  <li v-for="field in Object.keys(hitbox)" :key="field">
+                    <div v-if="!field.startsWith('unknown') || (field.startsWith('unknown') && advancedModeEnabled)">
+                      {{ field }}
+                      <div class="input-field inline">
+                        <input v-model.number="hitbox[field]"/>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </li>
         </ul>

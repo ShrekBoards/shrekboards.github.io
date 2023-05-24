@@ -22,7 +22,7 @@
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import M from 'materialize-css';
-import { ShrekSuperSlamCharacterAttackCollection } from '@/types';
+import { ShrekSuperSlamCharacterAttackCollection, ShrekSuperSlamStageCollection } from '@/types';
 
 export default defineComponent({
     name: "save-button",
@@ -31,12 +31,14 @@ export default defineComponent({
             masterDat: Uint8Array,
             masterDir: Uint8Array,
             console: number,
-            attacks: ShrekSuperSlamCharacterAttackCollection) => Uint8Array[];
+            attacks: ShrekSuperSlamCharacterAttackCollection,
+            stages: ShrekSuperSlamStageCollection) => Uint8Array[];
         const wasmRecreateGameFiles = inject("wasmRecreateGameFiles") as WasmRecreateGameFilesFunction;
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
         const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
+        const stagesGlobal = inject("stages") as Ref<ShrekSuperSlamStageCollection>;
         const router = useRouter();
         /**
          * Function to determine if the button should render at all
@@ -61,7 +63,8 @@ export default defineComponent({
                     masterDatGlobal.value,
                     masterDirGlobal.value,
                     consoleGlobal.value,
-                    attacksGlobal.value
+                    attacksGlobal.value,
+                    stagesGlobal.value,
                 );
 
                 masterDatGlobal.value = newFiles[0];
