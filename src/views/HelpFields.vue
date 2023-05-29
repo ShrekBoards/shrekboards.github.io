@@ -6,116 +6,220 @@
         <h2>Fields</h2>
         <p>This section details what the different fields within the app do within the game.</p>
         <p>Some of this is speculation and guesswork! Please report if things do not work as written.</p>
-        <h4>Attack Names</h4>
-        <ul class="list">
-          <li>A <b>special</b> attack is the character's SLAM attack.</li>
-          <li>The rest of the attacks should be self-explanatory from the name.</li>
-        </ul>
+
         <h4>Attack Fields</h4>
+
         <h5>Numeric fields</h5>
-        <ul class="list">
-          <li>
-            The <b>aim_range</b> is the distance at which the attack homes in on the opponent.
-          </li>
-          <li>
-            The <b>charge</b> field is how long it takes (in seconds) for a charge
-            attack to fully charge. The <b>charge_effect</b> is how long it takes
-            (also in seconds) for the charging animation, the orange flash, to complete.
-          </li>
-          <li>
-            <b>damage1</b> is the damage dealt by the attack. The SLAM bar fills at 100 damage. Can be negative, which
-            causes the SLAM bar to decrease when the move connects.
-          </li>
-          <li>
-            The purposes of <b>damage2</b> and <b>damage3</b> are unknown. When trying to edit a move's damage, it is
-            recommended to just edit all three fields to the same value. These two fields are used in some unknown
-            circumstances, but the majority of calculations use damage1.
-          </li>
-          <li>
-            The <b>endlag</b> is the number of seconds the character is inactive for after the move completes.
-          </li>
-          <li>
-            The <b>fall_speed</b> controls vertical movement in the attack. Positive numbers make the character go
-            up, the larger the fast, negative goes down, the smaller the faster.
-          </li>
-          <li>
-            The <b>invincibility</b> field is the amount of time, in seconds, that the character is invincible after
-            performing the attack. The invincibility is cancelled early if the player performs another attack. This is
-            often used in conjunction with the endlag field on SLAM attacks.
-          </li>
-          <li>
-            The <b>knockback</b> field is how far the attack landing pushes an opponent away. Positive numbers push
-            an opponent away, negative numbers pull toward.
-          </li>
-          <li>
-            The <b>multi_hit_speed</b> is how many times a second a multi-hit move hits. If set to zero, the move will
-            be a single-hit move.
-          </li>
-          <li>
-            The <b>stun</b> is the amount of time, in seconds, that the attacks stuns the opponent for. Stun in this
-            context refers to the state where a character is unable to act, and has stars circling their heads.
-          </li>
-        </ul>
+        <table class="striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>aim_range</td>
+              <td>The distance at which the attack homes in on the opponent.</td>
+            </tr>
+            <tr>
+              <td>animation_speed_on_hit</td>
+              <td>The speed of the attack animation (in seconds) if the attack hits.</td>
+            </tr>
+            <tr>
+              <td>animation_speed_on_miss</td>
+              <td>The speed of the attack animation (in seconds) if the attack misses.</td>
+            </tr>
+            <tr>
+              <td>charge</td>
+              <td>The time (in seconds) for a charge attack to fully charge.</td>
+            </tr>
+            <tr>
+              <td>charge_effect</td>
+              <td>The time (in seconds) for the charging animation - the orange flash - to complete.</td>
+            </tr>
+            <tr>
+              <td>damage1</td>
+              <td>
+                The damage dealt by the attack.<br/>
+                The user's SLAM bar fills after dealing 100 damage.<br/>
+                Negative numbers reduce the user's SLAM bar.
+              </td>
+            </tr>
+            <tr>
+              <td>damage2</td>
+              <td>Unknown, seems to be used instead of damage1 rarely. Set this to the same value as damage1.</td>
+            </tr>
+            <tr>
+              <td>damage3</td>
+              <td>Unknown, seems to be used instead of damage1 rarely. Set this to the same value as damage1.</td>
+            </tr>
+            <tr>
+              <td>endlag</td>
+              <td>The amount of time (in seconds) the character is inactive for after the move completes.</td>
+            </tr>
+            <tr>
+              <td>fall_speed</td>
+              <td>
+                Controls vertical movement in the attack.<br/>
+                Positive numbers make the character go up, the larger the faster.<br/>
+                Negative goes down, the smaller the faster.
+              </td>
+            </tr>
+            <tr>
+              <td>invincibility</td>
+              <td>
+                The amount of time, in seconds, that the character is invincible after performing the attack.<br/>
+                The invincibility is cancelled early if the player performs another attack.<br/>
+                This is often used in conjunction with the endlag field on SLAM attacks.
+              </td>
+            </tr>
+            <tr>
+              <td>knockback</td>
+              <td>
+                How far the attack landing pushes the opponent away.<br/>
+                Positive numbers push an opponent away, negative numbers pull toward.
+              </td>
+            </tr>
+            <tr>
+              <td>multi_hit_speed</td>
+              <td>
+                How many times a second a multi-hit move hits.<br/>
+                If set to zero, the move will be a single-hit move.
+              </td>
+            </tr>
+            <tr>
+              <td>stun</td>
+              <td>
+                The amount of time (in seconds) that the attacks stuns the opponent for.<br/>
+                Stun in this context refers to the state where a character is unable to act, and has stars circling their heads.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
         <h5>Tickbox fields</h5>
-        <ul class="list">
-          <li>
-            If a move is <b>disabled</b>, then inputting it causes nothing to happen.
-          </li>
-          <li>
-            A move that <b>hits_otg</b> hits characters in the blue knocked-down state.
-          </li>
-          <li>
-            If a move is <b>intangible</b>, it doesn't seem to do anything? This one needs more research.
-          </li>
-          <li>
-            If <b>is_slam</b> is checked, the move will SLAM an opponent if it connects and the user's SLAM bar is full.
-          </li>
-          <li>
-            If the <b>knocks_down</b> flag is set, the the move connecting puts the opponent in the blue knocked-down state.
-          </li>
-          <li>
-            If <b>lock_position</b> is set, the direction the user is facing will be locked in place during the move.
-          </li>
-          <li>
-            When <b>no_opponent_contact</b> is checked, the move will not make contact with opponents. It will still make
-            contact with walls and throwables.
-          </li>
-          <li>
-            If <b>shield_breaks</b> is checked, then the move will break shields on contact.
-          </li>
-        </ul>
+        <table class="striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>disabled</td>
+              <td>If checked, inputting the move causes nothing to happen.</td>
+            </tr>
+            <tr>
+              <td>hits_otg</td>
+              <td>If checked, the move hits characters that are in the knocked-down blue state.</td>
+            </tr>
+            <tr>
+              <td>ignore_gravity</td>
+              <td>If checked, the move is unaffected by gravity (e.g. Cyclops and Hook airdash).</td>
+            </tr>
+            <tr>
+              <td>intangible</td>
+              <td>If checked, the move doesn't seem to do anything? This one needs more research.</td>
+            </tr>
+            <tr>
+              <td>is_slam</td>
+              <td>If checked, the move will SLAM the opponent if it connects and the user's SLAM bar is full.</td>
+            </tr>
+            <tr>
+              <td>is_slam_at_any_percent</td>
+              <td>If checked, the move will SLAM the opponent if it connects, no matter the user's SLAM bar percentage. It then empties the user's SLAM bar.</td>
+            </tr>
+            <tr>
+              <td>knocks_down</td>
+              <td>If checked, the move connecting puts the opponent in the blue knocked-down state.</td>
+            </tr>
+            <tr>
+              <td>lock_position</td>
+              <td>If checked, the direction the user is facing will be locked in place during the move.</td>
+            </tr>
+            <tr>
+              <td>no_opponent_contact</td>
+              <td>If checked, he move will not make contact with opponents. It will still make contact with walls and throwables.</td>
+            </tr>
+            <tr>
+              <td>shield_breaks</td>
+              <td>If checked, the move will break shields on contact.</td>
+            </tr>
+          </tbody>
+        </table>
+
         <h4>Hitbox Fields</h4>
-        <ul class="list">
-          <li>
-            The <b>delay</b> is the amount of time in seconds it takes for the hitbox to become active from when the attack
-            starts.
-          </li>
-          <li>
-            The <b>width</b> is the angle the circle 'wraps around' the character making the attack. Zero is a semicircle in
-            front of the character, one is a thin line directly in front, and negative one is a full circle around.
-          </li>
-          <li>
-            The <b>radius</b> is how far the hitbox stretches out from the character. This number cannot be less than zero, or
-            the game crashes.
-          </li>
-        </ul>
+        <table class="striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>delay</td>
+              <td>The amount of time (in seconds) it takes for the hitbox to become active from when the attack starts.</td>
+            </tr>
+            <tr>
+              <td>arc</td>
+              <td>
+                The angle the circle 'wraps around' the character making the attack.<br/>
+                0 is a semicircle in front of the character, 1 is a thin line directly in front, and -1 is a full circle around.
+              </td>
+            </tr>
+            <tr>
+              <td>radius</td>
+              <td>
+                How far the hitbox stretches out from the character.<br/>
+                This number cannot be less than zero, or the game crashes.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
         <h4>Projectile Fields</h4>
         <p>
           The projectile fields are generally not very well understood and these could be incorrect. Things such as the damage
           dealt by the projectile are controlled by its encompassing attack.
         </p>
-        <ul class="list">
-          <li>
-            A projectile's <b>x_vector</b> controls its speed in the x-axis.
-          </li>
-          <li>
-            The <b>angle</b> and <b>arc</b> parameters has some bearing on the angle the projectile is fired at.
-          </li>
-          <li>
-            <b>homing1</b>, <b>homing2</b> and <b>homing3</b> all control the degree in which the projectile homes
-            in on an opponent.
-          </li>
-        </ul>
+        <table class="striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>angle</td>
+              <td>Along with arc, has some bearing on the angle the projectile is fired at.</td>
+            </tr>
+            <tr>
+              <td>arc</td>
+              <td>Along with angle, has some bearing on the angle the projectile is fired at.</td>
+            </tr>
+            <tr>
+              <td>homing1</td>
+              <td>Controls the degree in which the projectile homes in on the opponent.</td>
+            </tr>
+            <tr>
+              <td>homing2</td>
+              <td>Controls the degree in which the projectile homes in on the opponent.</td>
+            </tr>
+            <tr>
+              <td>homing3</td>
+              <td>Controls the degree in which the projectile homes in on the opponent.</td>
+            </tr>
+            <tr>
+              <td>x_vector</td>
+              <td>Controls the projectile's speed in the x-axis</td>
+            </tr>
+          </tbody>
+        </table>
+
         <h4>Unknown Fields</h4>
         <p>
           The attack objects are a collection of about 300 bytes, comprising of
