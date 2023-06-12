@@ -15,7 +15,12 @@
           who also made the logo.
         </p>
         <p>
-          It is developed by <a href="https://github.com/kirbyUK">kirby</a> using Vue 3, TypeScript, WebAssembly and
+          Many of the fields were tested and given meaning from unknown fields (see "Unknown Fields" in
+          <router-link to="/help/fields">Fields</router-link>) by community member Henk, who also maintains the
+          "TournaHenk" edition of the game, which uses Shab'aint to perform balance patches to the base game.
+        </p>
+        <p>
+          Shab'aint is developed by <a href="https://github.com/kirbyUK">kirby</a> using Vue 3, TypeScript, WebAssembly and
           Materialize. The WASM portion is written in Rust. Thanks to this combination, everything runs client-side -
           no data is sent to any servers.
         </p>
