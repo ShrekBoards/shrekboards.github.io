@@ -89,10 +89,21 @@
               </td>
             </tr>
             <tr>
+              <td>shield_break_stun_time</td>
+              <td>The amount of time (in seconds) an opponent is stunned for if the move breaks their shield.</td>
+            </tr>
+            <tr>
               <td>stun</td>
               <td>
                 The amount of time (in seconds) that the attacks stuns the opponent for.<br/>
                 Stun in this context refers to the state where a character is unable to act, and has stars circling their heads.
+              </td>
+            </tr>
+            <tr>
+              <td>vertical_knockback</td>
+              <td>
+                How far the attack landing pushes the opponent upwards.<br/>
+                Positive numbers push an opponent upwards, negative numbers pull down to the ground.
               </td>
             </tr>
           </tbody>
@@ -140,12 +151,20 @@
               <td>If checked, the direction the user is facing will be locked in place during the move.</td>
             </tr>
             <tr>
+              <td>maintain_direction</td>
+              <td>If checked, the user of the move will retain the direction they were facing. Otherwise, the user will turn to face the opponent once the move completes.</td>
+            </tr>
+            <tr>
               <td>no_opponent_contact</td>
               <td>If checked, he move will not make contact with opponents. It will still make contact with walls and throwables.</td>
             </tr>
             <tr>
               <td>shield_breaks</td>
               <td>If checked, the move will break shields on contact.</td>
+            </tr>
+            <tr>
+              <td>shield_breaks_without_stun</td>
+              <td>If checked, the move will break shields on contact, but the opponent will not be stunned.</td>
             </tr>
           </tbody>
         </table>
@@ -175,6 +194,13 @@
               <td>
                 How far the hitbox stretches out from the character.<br/>
                 This number cannot be less than zero, or the game crashes.
+              </td>
+            </tr>
+            <tr>
+              <td>horizontal_angle</td>
+              <td>
+                The horizontal angle of the hitbox.<br/>
+                Negative numbers go right, positive left, zero is directly in front of the player.
               </td>
             </tr>
           </tbody>
