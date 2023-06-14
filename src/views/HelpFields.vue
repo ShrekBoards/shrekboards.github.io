@@ -67,18 +67,18 @@
               </td>
             </tr>
             <tr>
+              <td>horizontal_knockback</td>
+              <td>
+                How far the attack landing pushes the opponent away.<br/>
+                Positive numbers push an opponent away, negative numbers pull toward.
+              </td>
+            </tr>
+            <tr>
               <td>invincibility</td>
               <td>
                 The amount of time, in seconds, that the character is invincible after performing the attack.<br/>
                 The invincibility is cancelled early if the player performs another attack.<br/>
                 This is often used in conjunction with the endlag field on SLAM attacks.
-              </td>
-            </tr>
-            <tr>
-              <td>knockback</td>
-              <td>
-                How far the attack landing pushes the opponent away.<br/>
-                Positive numbers push an opponent away, negative numbers pull toward.
               </td>
             </tr>
             <tr>
@@ -128,7 +128,7 @@
             </tr>
             <tr>
               <td>ignore_gravity</td>
-              <td>If checked, the move is unaffected by gravity (e.g. Cyclops and Hook airdash).</td>
+              <td>If checked, the move is unaffected by gravity (e.g. Captain Hook's airdash).</td>
             </tr>
             <tr>
               <td>intangible</td>
@@ -156,7 +156,7 @@
             </tr>
             <tr>
               <td>no_opponent_contact</td>
-              <td>If checked, he move will not make contact with opponents. It will still make contact with walls and throwables.</td>
+              <td>If checked, the move will not make contact with opponents. It will still make contact with walls and throwables.</td>
             </tr>
             <tr>
               <td>shield_breaks</td>
