@@ -1,48 +1,29 @@
-interface ShrekSuperSlamCharacterAttackProjectile {
-    x_vector: number;
-    angle: number;
-    arc: number;
-    homing1: number;
-    homing2: number;
-    homing3: number;
-}
+interface ShrekSuperSlamCharacterAttack {}
 
-interface ShrekSuperSlamCharacterAttackHitbox {
-    delay: number;
-    width: number;
-    radius: number;
-    offset: number;
-}
+interface ShrekSuperSlamCharacterPhysics {}
 
-interface ShrekSuperSlamCharacterAttack {
-    damage1: number;
-    damage2: number;
-    damage3: number;
-    disabled: boolean;
-    endlag: number;
-    fall_speed: number;
-    hitboxes: ShrekSuperSlamCharacterAttackHitbox[];
-    hits_otg: boolean;
-    intangible: boolean;
-    knocks_down: boolean;
-    readonly name: string;
-    projectiles: ShrekSuperSlamCharacterAttackProjectile[];
-}
-
-export interface NamedShrekSuperSlamCharacterAttack {
+interface ShrekSuperSlamCharacterAttacksCollection {
     readonly [name: string]: ShrekSuperSlamCharacterAttack;
 }
 
-export interface ShrekSuperSlamCharacterAttackCollection {
-    readonly [character: string]: NamedShrekSuperSlamCharacterAttack;
+interface ShrekSuperSlamCharacter {
+    readonly [field: string]: ShrekSuperSlamCharacterAttacksCollection | ShrekSuperSlamCharacterPhysics;
 }
 
-interface ShrekSuperSlamStageProperty {}
+export interface ShrekSuperSlamCharacterCollection {
+    readonly [character: string]: ShrekSuperSlamCharacter;
+}
 
-export interface NamedShrekSuperSlamStageProperty {
-    readonly [name: string]: ShrekSuperSlamStageProperty;
+interface ShrekSuperSlamStageSpitter {}
+
+interface ShrekSuperSlamStageSpitterCollection {
+    readonly [name: string]: ShrekSuperSlamStageSpitter;
+}
+
+interface ShrekSuperSlamStage {
+    readonly [field: string]: ShrekSuperSlamStageSpitterCollection;
 }
 
 export interface ShrekSuperSlamStageCollection {
-    readonly [stage: string]: NamedShrekSuperSlamStageProperty;
+    readonly [stage: string]: ShrekSuperSlamStage;
 }

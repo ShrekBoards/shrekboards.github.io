@@ -22,7 +22,7 @@
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import M from 'materialize-css';
-import { ShrekSuperSlamCharacterAttackCollection, ShrekSuperSlamStageCollection } from '@/types';
+import { ShrekSuperSlamCharacterCollection, ShrekSuperSlamStageCollection } from '@/types';
 
 export default defineComponent({
     name: "save-button",
@@ -31,20 +31,20 @@ export default defineComponent({
             masterDat: Uint8Array,
             masterDir: Uint8Array,
             console: number,
-            attacks: ShrekSuperSlamCharacterAttackCollection,
+            characters: ShrekSuperSlamCharacterCollection,
             stages: ShrekSuperSlamStageCollection) => Uint8Array[];
         const wasmRecreateGameFiles = inject("wasmRecreateGameFiles") as WasmRecreateGameFilesFunction;
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
-        const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
+        const charactersGlobal = inject("characters") as Ref<ShrekSuperSlamCharacterCollection>;
         const stagesGlobal = inject("stages") as Ref<ShrekSuperSlamStageCollection>;
         const router = useRouter();
         /**
          * Function to determine if the button should render at all
          */
         function isVisible() {
-            return Object.keys(attacksGlobal.value).length > 0;
+            return Object.keys(charactersGlobal.value).length > 0;
         }
 
         /**
@@ -63,7 +63,7 @@ export default defineComponent({
                     masterDatGlobal.value,
                     masterDirGlobal.value,
                     consoleGlobal.value,
-                    attacksGlobal.value,
+                    charactersGlobal.value,
                     stagesGlobal.value,
                 );
 

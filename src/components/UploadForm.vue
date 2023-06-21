@@ -110,28 +110,28 @@
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { ShrekSuperSlamCharacterAttackCollection, ShrekSuperSlamStageCollection } from "../types"
+import { ShrekSuperSlamCharacterCollection, ShrekSuperSlamStageCollection } from "../types"
 import M from 'materialize-css';
 
 export default defineComponent({
     name: 'upload-form',
     setup() {
-        type WasmExtractCharacterAttacksFunction = (
+        type WasmExtractCharactersFunction = (
             masterDat: Uint8Array,
             masterDir: Uint8Array,
-            console: number) => ShrekSuperSlamCharacterAttackCollection;
+            console: number) => ShrekSuperSlamCharacterCollection;
 
         type WasmExtractStagesFunction = (
           masterDat: Uint8Array,
           masterDir: Uint8Array,
           console: number) => ShrekSuperSlamStageCollection;
           
-        const wasmExtractCharacterAttacks = inject("wasmExtractCharacterAttacks") as WasmExtractCharacterAttacksFunction;
+        const wasmExtractCharacters = inject("wasmExtractCharacters") as WasmExtractCharactersFunction;
         const wasmExtractStages = inject("wasmExtractStages") as WasmExtractStagesFunction;
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
-        const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
+        const charactersGlobal = inject("characters") as Ref<ShrekSuperSlamCharacterCollection>;
         const stagesGlobal = inject("stages") as Ref<ShrekSuperSlamStageCollection>;
         const advancedModeEnabledGlobal = inject("advancedModeEnabled") as Ref<boolean>;
         const router = useRouter();
@@ -163,7 +163,7 @@ export default defineComponent({
           masterDatGlobal.value = new Uint8Array();
           masterDirGlobal.value = new Uint8Array();
           consoleGlobal.value = 0;
-          attacksGlobal.value = {};
+          charactersGlobal.value = {};
           stagesGlobal.value = {};
         }
 
@@ -189,7 +189,7 @@ export default defineComponent({
         /**
          * Function to call once the two files from the form have completed loading.
          *
-         * Transforms the loaded bytes to the character attack JSON, and stores the
+         * Transforms the loaded bytes to the character and stages JSON, and stores the
          * global state for use in the rest of the application.
          *
          * Params:
@@ -211,9 +211,9 @@ export default defineComponent({
             consoleGlobal.value = gameconsole;
             advancedModeEnabledGlobal.value = advancedModeEnabled;
 
-            // Read the attacks and stages from the MASTER.DAT and DIR pair
+            // Read the characters and stages from the MASTER.DAT and DIR pair
             // using the wasm functions.
-            attacksGlobal.value = wasmExtractCharacterAttacks(
+            charactersGlobal.value = wasmExtractCharacters(
                 masterDat,
                 masterDir,
                 gameconsole
@@ -226,7 +226,7 @@ export default defineComponent({
             );
             
             // Get the first character alphabetically to navigate to
-            const characterNames = Object.keys(attacksGlobal.value);
+            const characterNames = Object.keys(charactersGlobal.value);
             characterNames.sort();
 
             if (characterNames.length > 0) {
@@ -247,7 +247,7 @@ export default defineComponent({
          * Form submit handler.
          *
          * Extracts files and fields from the form and submits them to the
-         * WebAssembly function, that extracts the character attacks from the files
+         * WebAssembly function, that extracts the characters from the files
          * and returns them as a JSON object.
          *
          * Params:

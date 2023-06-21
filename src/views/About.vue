@@ -5,7 +5,7 @@
       <div class="col s6 offset-s3">
         <h2>About</h2>
         <p>
-          SHAB'AINT is a tool for modifying character attack properties in the Shrek SuperSlam game files. It allows
+          SHAB'AINT is a tool for modifying character and stage properties in the Shrek SuperSlam game files. It allows
           for modifying and regenerating the files provided by the game, allowing for persistent modifications that
           can be loaded on consoles or in emulators.
         </p>

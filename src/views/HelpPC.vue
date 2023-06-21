@@ -28,7 +28,7 @@
         <h5>Use the tool to make changes</h5>
         <ol>
             <li>
-                Make the changes to the characters attacks as you desire. For information on what the properties
+                Make the changes to the characters and stages as you desire. For information on what the properties
                 all mean, see the <router-link to="/images/help/fields">Fields</router-link> documentation.
             </li>
             <li>Changes persist as you make them.</li>

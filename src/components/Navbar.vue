@@ -39,7 +39,7 @@ import { defineComponent, inject, Ref } from 'vue';
 import ResetButton from '@/components/ResetButton.vue';
 import SaveButton from '@/components/SaveButton.vue';
 import M from 'materialize-css';
-import { ShrekSuperSlamCharacterAttackCollection } from "../types"
+import { ShrekSuperSlamCharacterCollection } from "../types"
 
 export default defineComponent({
   name: 'navbar-component',
@@ -48,11 +48,11 @@ export default defineComponent({
       SaveButton,
   },
   setup() {
-    const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
-    const characterJsonDefined = (Object.keys(attacksGlobal.value).length > 0);
+    const charactersGlobal = inject("characters") as Ref<ShrekSuperSlamCharacterCollection>;
+    const characterJsonDefined = (Object.keys(charactersGlobal.value).length > 0);
     let firstCharacter = "";
     if (characterJsonDefined) {
-        firstCharacter = Object.keys(attacksGlobal.value).sort()[0]
+        firstCharacter = Object.keys(charactersGlobal.value).sort()[0]
     }
     return {
         characterJsonDefined,

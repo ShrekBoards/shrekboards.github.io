@@ -18,7 +18,7 @@
 import { defineComponent, inject, Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import M from 'materialize-css';
-import { ShrekSuperSlamCharacterAttackCollection } from "../types"
+import { ShrekSuperSlamCharacterCollection } from "../types"
 
 export default defineComponent({
     name: "reset-button",
@@ -26,7 +26,7 @@ export default defineComponent({
         const masterDatGlobal = inject("masterDat") as Ref<Uint8Array>;
         const masterDirGlobal = inject("masterDir") as Ref<Uint8Array>;
         const consoleGlobal = inject("console") as Ref<number>;
-        const attacksGlobal = inject("attacks") as Ref<ShrekSuperSlamCharacterAttackCollection>;
+        const charactersGlobal = inject("characters") as Ref<ShrekSuperSlamCharacterCollection>;
         const router = useRouter();
         /**
          * Function to determine if the state has been cleared or not.
@@ -36,7 +36,7 @@ export default defineComponent({
                 (masterDatGlobal.value.length == 0)
                 && (masterDirGlobal.value.length == 0)
                 && (consoleGlobal.value == 0)
-                && (Object.keys(attacksGlobal.value).length == 0)
+                && (Object.keys(charactersGlobal.value).length == 0)
             );
         }
 
@@ -50,7 +50,7 @@ export default defineComponent({
                 masterDatGlobal.value = new Uint8Array();
                 masterDirGlobal.value = new Uint8Array();
                 consoleGlobal.value = 0;
-                attacksGlobal.value = {};
+                charactersGlobal.value = {};
                 router.push({name: "Upload"});
             }
         }
