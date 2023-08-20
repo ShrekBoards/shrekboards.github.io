@@ -112,6 +112,13 @@
               </td>
             </tr>
             <tr>
+              <td>vertical_follow_opponent</td>
+              <td>
+                Follows the opponent vertically if enabled. Examples are Gingerbread Man, Humpty Dumpty and G-nome's charged specials.<br/>
+                Move must also lock-on.
+              </td>
+            </tr>
+            <tr>
               <td>vertical_knockback1</td>
               <td>
                 How far the attack landing pushes the opponent upwards.<br/>
