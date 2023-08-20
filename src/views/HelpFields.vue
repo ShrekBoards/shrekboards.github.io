@@ -100,10 +100,22 @@
               </td>
             </tr>
             <tr>
-              <td>vertical_knockback</td>
+              <td>vertical_knockback1</td>
               <td>
                 How far the attack landing pushes the opponent upwards.<br/>
                 Positive numbers push an opponent upwards, negative numbers pull down to the ground.
+              </td>
+            </tr>
+            <tr>
+              <td>vertical_knockback2</td>
+              <td>
+                Unknown, sometimes used instead of vertical_knockback1. Does not seem to affect high wall attacks.
+              </td>
+            </tr>
+            <tr>
+              <td>vertical_knockback3</td>
+              <td>
+                Unknown, sometimes used instead of vertical_knockback1.
               </td>
             </tr>
           </tbody>
