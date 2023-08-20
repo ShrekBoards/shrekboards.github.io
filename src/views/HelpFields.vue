@@ -67,10 +67,22 @@
               </td>
             </tr>
             <tr>
-              <td>horizontal_knockback</td>
+              <td>horizontal_knockback1</td>
               <td>
                 How far the attack landing pushes the opponent away.<br/>
                 Positive numbers push an opponent away, negative numbers pull toward.
+              </td>
+            </tr>
+            <tr>
+              <td>horizontal_knockback2</td>
+              <td>
+                Unknown, seems to be used instead of horizontal_knockback1 rarely.
+              </td>
+            </tr>
+            <tr>
+              <td>horizontal_knockback3</td>
+              <td>
+                Unknown, seems to be used instead of horizontal_knockback1 rarely.
               </td>
             </tr>
             <tr>
