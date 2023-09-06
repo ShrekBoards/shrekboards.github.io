@@ -277,6 +277,40 @@
           </tbody>
         </table>
 
+        <h4>Player Physics</h4>
+        <p>
+          Most of the player physics values come from the game itself, from a
+          debug method that was left in. We therefore don't know exactly what
+          each does, but the names are "official Shaba" and somewhat descriptive.
+        </p>
+        <p>
+          The following fields are the exception, and are found from reverse-engineering
+          like the other fields:
+        </p>
+        <table class="striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>knock_down_time</td>
+              <td>The amount of time, in seconds, the character stays knocked-down (without mashing).</td>
+            </tr>
+            <tr>
+              <td>mash_value</td>
+              <td>
+                An additional value to decrement the knocked-down time when the player mashes.<br/>
+                Due to the way the code works, setting this value to 1 makes mashing do nothing.<br/>
+                Setting this value to less than 1 makes mashing slower than not.<br/>
+                Setting this value to negative would make mashing keep the player knocked-down longer than not mashing.<br/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
         <h4>Unknown Fields</h4>
         <p>
           The attack objects are a collection of about 300 bytes, comprising of
