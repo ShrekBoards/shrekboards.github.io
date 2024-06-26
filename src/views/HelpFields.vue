@@ -19,8 +19,20 @@
           </thead>
           <tbody>
             <tr>
+              <td>aim_assist_strength</td>
+              <td>Aim tracking, lower numbers (to a minimum of -1) increase the attack's tracking.</td>
+            </tr>
+            <tr>
+              <td>aim_assist_strength2</td>
+              <td>Appears to be similar to aim_assist_strength?</td>
+            </tr>
+            <tr>
               <td>aim_range</td>
               <td>The distance at which the attack homes in on the opponent.</td>
+            </tr>
+            <tr>
+              <td>animation_speed</td>
+              <td>The speed of the attack animation (in seconds) for the attack.</td>
             </tr>
             <tr>
               <td>animation_speed_on_hit</td>
@@ -53,6 +65,13 @@
             <tr>
               <td>damage3</td>
               <td>Unknown, seems to be used instead of damage1 rarely. Set this to the same value as damage1.</td>
+            </tr>
+            <tr>
+              <td>duration</td>
+              <td>
+                The higher the number, the longer the move will continue for.<br/>
+                Hitboxes don't always follow along.
+              </td>
             </tr>
             <tr>
               <td>endlag</td>
@@ -91,6 +110,21 @@
                 The amount of time, in seconds, that the character is invincible after performing the attack.<br/>
                 The invincibility is cancelled early if the player performs another attack.<br/>
                 This is often used in conjunction with the endlag field on SLAM attacks.
+              </td>
+            </tr>
+            <tr>
+              <td>max_projectile_move_curving</td>
+              <td>
+                Tracing / curving of projectile attacks, larger numbers will follow opponents and do more elaborate curves during the attack.<br/>
+                Minimum value of 1, maximum 100.<br/>
+                Non-projectile moves have this set to 99999, which turns it off.
+              </td>
+            </tr>
+            <tr>
+              <td>move_angle</td>
+              <td>
+                The angle of the move.<br/>
+                Moving in a straight line is 1, decimal numbers between 0 and 1 go diagonally.
               </td>
             </tr>
             <tr>
@@ -149,6 +183,13 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>allow_movement</td>
+              <td>
+                If checked, allows characters to move during the animation.<br/>
+                Checked by default for air dashes, and some attacks and slams.
+              </td>
+            </tr>
             <tr>
               <td>disabled</td>
               <td>If checked, inputting the move causes nothing to happen.</td>
