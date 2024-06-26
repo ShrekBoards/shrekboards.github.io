@@ -31,6 +31,13 @@
               <td>The distance at which the attack homes in on the opponent.</td>
             </tr>
             <tr>
+              <td>allow_movement</td>
+              <td>
+                If non-zero, allows characters to move during the animation.<br/>
+                Values appear to be between 0 and 3, inclusive.
+              </td>
+            </tr>
+            <tr>
               <td>animation_speed</td>
               <td>The speed of the attack animation (in seconds) for the attack.</td>
             </tr>
@@ -113,11 +120,11 @@
               </td>
             </tr>
             <tr>
-              <td>max_projectile_move_curving</td>
+              <td>max_move_curving</td>
               <td>
-                Tracing / curving of projectile attacks, larger numbers will follow opponents and do more elaborate curves during the attack.<br/>
+                Tracing / curving of attacks, larger numbers will follow opponents and do more elaborate curves during the attack.<br/>
                 Minimum value of 1, maximum 100.<br/>
-                Non-projectile moves have this set to 99999, which turns it off.
+                Non-curving moves have this set to 99999, which turns it off.
               </td>
             </tr>
             <tr>
@@ -184,10 +191,15 @@
           </thead>
           <tbody>
             <tr>
-              <td>allow_movement</td>
+              <td>allow_charge</td>
               <td>
-                If checked, allows characters to move during the animation.<br/>
-                Checked by default for air dashes, and some attacks and slams.
+                Allows charging of some uncharged strong attacks and slams, and ground throws.
+              </td>
+            </tr>
+            <tr>
+              <td>disable_curving</td>
+              <td>
+                If enabled, prevents moves from curving during the attack, forcing them into a straight line.
               </td>
             </tr>
             <tr>
@@ -197,6 +209,12 @@
             <tr>
               <td>hits_otg</td>
               <td>If checked, the move hits characters that are in the knocked-down blue state.</td>
+            </tr>
+            <tr>
+              <td>horizontal_lock_on</td>
+              <td>
+                Enables horizontal lock-on, for example Pinnochio's uncharged strong attack.
+              </td>
             </tr>
             <tr>
               <td>ignore_gravity</td>
@@ -229,6 +247,12 @@
             <tr>
               <td>no_opponent_contact</td>
               <td>If checked, the move will not make contact with opponents. It will still make contact with walls and throwables.</td>
+            </tr>
+            <tr>
+              <td>no_opponent_contact2</td>
+              <td>
+                If enabled, makes it so you maintain no contact after hitting the move.
+              </td>
             </tr>
             <tr>
               <td>shield_breaks</td>
